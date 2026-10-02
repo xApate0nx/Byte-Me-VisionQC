@@ -1,0 +1,328 @@
+{
+    "model": "PatchCore v2",
+    "model_version": "patchcore_water_cap_v2",
+    "threshold": 12.3785223961,
+    "normal_samples": 21,
+    "defect_samples": 23,
+    "metrics": {
+        "TP": 23,
+        "TN": 19,
+        "FP": 2,
+        "FN": 0,
+        "precision": 0.92,
+        "recall": 1.0,
+        "specificity": 0.9047619047619048,
+        "f1": 0.9583333333333334,
+        "accuracy": 0.9545454545454546
+    },
+    "results": [
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.44.15.jpeg",
+            "actual": "NORMAL",
+            "anomaly_score": 10.603835105895996,
+            "threshold": 12.3785223961,
+            "decision": "PASS"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.44.17.jpeg",
+            "actual": "NORMAL",
+            "anomaly_score": 10.525938034057617,
+            "threshold": 12.3785223961,
+            "decision": "PASS"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.44.19.jpeg",
+            "actual": "NORMAL",
+            "anomaly_score": 12.326834678649902,
+            "threshold": 12.3785223961,
+            "decision": "PASS"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.44.20.jpeg",
+            "actual": "NORMAL",
+            "anomaly_score": 10.387495994567871,
+            "threshold": 12.3785223961,
+            "decision": "PASS"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.44.21.jpeg",
+            "actual": "NORMAL",
+            "anomaly_score": 10.70344352722168,
+            "threshold": 12.3785223961,
+            "decision": "PASS"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.44.22.jpeg",
+            "actual": "NORMAL",
+            "anomaly_score": 10.938895225524902,
+            "threshold": 12.3785223961,
+            "decision": "PASS"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.44.23.jpeg",
+            "actual": "NORMAL",
+            "anomaly_score": 10.351402282714844,
+            "threshold": 12.3785223961,
+            "decision": "PASS"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.44.24.jpeg",
+            "actual": "NORMAL",
+            "anomaly_score": 10.394155502319336,
+            "threshold": 12.3785223961,
+            "decision": "PASS"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.44.26.jpeg",
+            "actual": "NORMAL",
+            "anomaly_score": 10.60896110534668,
+            "threshold": 12.3785223961,
+            "decision": "PASS"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.44.29.jpeg",
+            "actual": "NORMAL",
+            "anomaly_score": 10.282447814941406,
+            "threshold": 12.3785223961,
+            "decision": "PASS"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.44.35.jpeg",
+            "actual": "NORMAL",
+            "anomaly_score": 10.296579360961914,
+            "threshold": 12.3785223961,
+            "decision": "PASS"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.44.37.jpeg",
+            "actual": "NORMAL",
+            "anomaly_score": 10.02232551574707,
+            "threshold": 12.3785223961,
+            "decision": "PASS"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.44.38.jpeg",
+            "actual": "NORMAL",
+            "anomaly_score": 10.52003288269043,
+            "threshold": 12.3785223961,
+            "decision": "PASS"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.44.43.jpeg",
+            "actual": "NORMAL",
+            "anomaly_score": 10.565284729003906,
+            "threshold": 12.3785223961,
+            "decision": "PASS"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.44.45.jpeg",
+            "actual": "NORMAL",
+            "anomaly_score": 10.167159080505371,
+            "threshold": 12.3785223961,
+            "decision": "PASS"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.44.47.jpeg",
+            "actual": "NORMAL",
+            "anomaly_score": 12.318585395812988,
+            "threshold": 12.3785223961,
+            "decision": "PASS"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.44.48.jpeg",
+            "actual": "NORMAL",
+            "anomaly_score": 16.588619232177734,
+            "threshold": 12.3785223961,
+            "decision": "FAIL"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.44.50.jpeg",
+            "actual": "NORMAL",
+            "anomaly_score": 10.855207443237305,
+            "threshold": 12.3785223961,
+            "decision": "PASS"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.44.52.jpeg",
+            "actual": "NORMAL",
+            "anomaly_score": 10.278759002685547,
+            "threshold": 12.3785223961,
+            "decision": "PASS"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.44.53.jpeg",
+            "actual": "NORMAL",
+            "anomaly_score": 11.114684104919434,
+            "threshold": 12.3785223961,
+            "decision": "PASS"
+        },
+        {
+            "filename": "wsp.jpeg",
+            "actual": "NORMAL",
+            "anomaly_score": 17.113399505615234,
+            "threshold": 12.3785223961,
+            "decision": "FAIL"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.51.07.jpeg",
+            "actual": "DEFECT",
+            "anomaly_score": 13.756612777709961,
+            "threshold": 12.3785223961,
+            "decision": "FAIL"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.51.08.jpeg",
+            "actual": "DEFECT",
+            "anomaly_score": 15.288071632385254,
+            "threshold": 12.3785223961,
+            "decision": "FAIL"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.51.10.jpeg",
+            "actual": "DEFECT",
+            "anomaly_score": 15.881103515625,
+            "threshold": 12.3785223961,
+            "decision": "FAIL"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.51.11.jpeg",
+            "actual": "DEFECT",
+            "anomaly_score": 17.021968841552734,
+            "threshold": 12.3785223961,
+            "decision": "FAIL"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.51.12 (1).jpeg",
+            "actual": "DEFECT",
+            "anomaly_score": 19.303434371948242,
+            "threshold": 12.3785223961,
+            "decision": "FAIL"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.51.12.jpeg",
+            "actual": "DEFECT",
+            "anomaly_score": 17.655393600463867,
+            "threshold": 12.3785223961,
+            "decision": "FAIL"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.51.13.jpeg",
+            "actual": "DEFECT",
+            "anomaly_score": 16.10407066345215,
+            "threshold": 12.3785223961,
+            "decision": "FAIL"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.51.14.jpeg",
+            "actual": "DEFECT",
+            "anomaly_score": 20.693723678588867,
+            "threshold": 12.3785223961,
+            "decision": "FAIL"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.51.15 (1).jpeg",
+            "actual": "DEFECT",
+            "anomaly_score": 19.502910614013672,
+            "threshold": 12.3785223961,
+            "decision": "FAIL"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.51.15 (2).jpeg",
+            "actual": "DEFECT",
+            "anomaly_score": 19.79969596862793,
+            "threshold": 12.3785223961,
+            "decision": "FAIL"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.51.15.jpeg",
+            "actual": "DEFECT",
+            "anomaly_score": 21.063312530517578,
+            "threshold": 12.3785223961,
+            "decision": "FAIL"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.51.16 (1).jpeg",
+            "actual": "DEFECT",
+            "anomaly_score": 15.4559907913208,
+            "threshold": 12.3785223961,
+            "decision": "FAIL"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.51.16 (2).jpeg",
+            "actual": "DEFECT",
+            "anomaly_score": 12.49097728729248,
+            "threshold": 12.3785223961,
+            "decision": "FAIL"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.51.16.jpeg",
+            "actual": "DEFECT",
+            "anomaly_score": 22.612411499023438,
+            "threshold": 12.3785223961,
+            "decision": "FAIL"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.51.17 (1).jpeg",
+            "actual": "DEFECT",
+            "anomaly_score": 18.97951889038086,
+            "threshold": 12.3785223961,
+            "decision": "FAIL"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.51.17 (2).jpeg",
+            "actual": "DEFECT",
+            "anomaly_score": 16.72664451599121,
+            "threshold": 12.3785223961,
+            "decision": "FAIL"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.51.17 (3).jpeg",
+            "actual": "DEFECT",
+            "anomaly_score": 15.167327880859375,
+            "threshold": 12.3785223961,
+            "decision": "FAIL"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.51.17.jpeg",
+            "actual": "DEFECT",
+            "anomaly_score": 12.79483413696289,
+            "threshold": 12.3785223961,
+            "decision": "FAIL"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.51.18 (1).jpeg",
+            "actual": "DEFECT",
+            "anomaly_score": 14.143216133117676,
+            "threshold": 12.3785223961,
+            "decision": "FAIL"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.51.18 (2).jpeg",
+            "actual": "DEFECT",
+            "anomaly_score": 14.658562660217285,
+            "threshold": 12.3785223961,
+            "decision": "FAIL"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.51.18 (3).jpeg",
+            "actual": "DEFECT",
+            "anomaly_score": 15.820792198181152,
+            "threshold": 12.3785223961,
+            "decision": "FAIL"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.51.18.jpeg",
+            "actual": "DEFECT",
+            "anomaly_score": 14.457452774047852,
+            "threshold": 12.3785223961,
+            "decision": "FAIL"
+        },
+        {
+            "filename": "WhatsApp Image 2026-10-02 at 13.51.19.jpeg",
+            "actual": "DEFECT",
+            "anomaly_score": 15.427135467529297,
+            "threshold": 12.3785223961,
+            "decision": "FAIL"
+        }
+    ]
+}

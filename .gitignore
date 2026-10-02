@@ -1,18 +1,79 @@
+# ==============================
 # Python
-__pycache__/
-*.py[cod]
+# ==============================
 .venv/
 venv/
-.pytest_cache/
+__pycache__/
+*.py[cod]
+*.pyo
 
-# Environment
+# ==============================
+# IDE
+# ==============================
+.vscode/
+.idea/
+
+# ==============================
+# Environment / secrets
+# ==============================
 .env
+.env.*
 
-# Node
-node_modules/
-dist/
+# ==============================
+# Generated inspection outputs
+# ==============================
+data/inspections/
+data/heatmaps/
 
-# ML / model artifacts
+# ==============================
+# Generated evaluation images
+# ==============================
+data/evaluation/patchcore_heatmaps/
+data/evaluation/roi_candidates/
+
+# ==============================
+# Old PatchCore model
+# ==============================
+models/patchcore_water_cap/
+
+# ==============================
+# Anomalib experiment artifacts
+# ==============================
+lightning_logs/
+outputs/
+runs/
+
+# ==============================
+# OS
+# ==============================
+.DS_Store
+Thumbs.db
+# ==============================
+# Generated model experiment files
+# ==============================
+models/patchcore_water_cap_v2/Patchcore/*/images/
+models/patchcore_water_cap_v2/Patchcore/*_evaluation/
+models/patchcore_water_cap_v2/Patchcore/*_raw/
+
+# Old ResNet model
+models/visionqc_resnet18/
+
+# Generated results
+results/
+
+# Generated evaluation artifacts
+data/evaluation/_auto_roi/
+data/evaluation/roi_test/
+data/evaluation/normalized_contact_sheet/
+data/evaluation/Patchcore/
+
+# Local database
+storage/visionqc.db
+data/evaluation/stable_region/
+data/inspection/
+models/patchcore_water_cap_v2/Patchcore/water_cap_v1_roi80/latest/
+
+# Generic ML model artifacts
 models/**/*.pt
 models/**/*.pth
 models/**/*.ckpt
@@ -20,14 +81,6 @@ models/**/*.onnx
 models/**/*.bin
 models/**/*.xml
 
-# Runtime database
-storage/visionqc.db
-
-# Runtime inspection data
+# Runtime inspection images and heatmaps
 storage/inspections/images/*
 storage/inspections/heatmaps/*
-
-# IDE / OS
-.DS_Store
-.idea/
-.vscode/
