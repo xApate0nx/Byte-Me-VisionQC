@@ -775,6 +775,14 @@ A typical demonstration is:
 9. Adjust threshold from Settings
 10. View updated analytics
 ```
+### Screen shots
+<img width="1352" height="896" alt="Screenshot 2026-10-03 014341" src="https://github.com/user-attachments/assets/602849e4-c2c5-46a7-b5a1-92da7193a70e" /> 
+
+<img width="1327" height="885" alt="Screenshot 2026-10-03 014400" src="https://github.com/user-attachments/assets/62edf636-9cb5-4986-b88b-813a2aadc001" />
+
+<img width="1342" height="847" alt="Screenshot 2026-10-03 014413" src="https://github.com/user-attachments/assets/e092fde7-cb1d-4c61-8e40-ddefbc6cc5de" />
+
+
 
 ---
 
