@@ -1,187 +1,959 @@
-# VisionQC
+# VisionQC — Intelligent Visual Quality Control System
 
-VisionQC is a computer-vision prototype for inspecting water bottle caps (`water_cap_v1`) and detecting visual defects. The work completed so far is focused on local Python experiments for image features, anomaly detection, PatchCore training and inference, thresholding, and inspection visualizations.
+> **AI-powered visual inspection for automated product quality control**
 
-## Project Layout
+VisionQC is an AI-assisted visual quality-control system designed to detect deviations in manufactured products using computer vision and anomaly detection.
 
-The following tree shows the current workspace. Image files and generated model/evaluation artifacts are grouped rather than listed individually; `.venv/` and Python cache files are omitted.
+The system learns what a **normal/good product** looks like from a small set of reference images and evaluates new product images for visual deviations. It combines product detection, canonical ROI extraction, PatchCore anomaly detection, spatial anomaly analysis, heatmap visualization, configurable inspection thresholds, and inspection history.
+
+The current prototype is developed around a **teal/cyan circular water-cap product** and is designed so that the same workflow can be adapted to other industrial products.
+
+---
+
+## 1. Project Overview
+
+Traditional visual inspection can be repetitive, time-consuming, and dependent on human consistency.
+
+VisionQC addresses this by providing an AI-assisted inspection pipeline:
+
+```text
+Camera / Image
+      ↓
+Image Quality Check
+      ↓
+Product Detection
+      ↓
+Canonical ROI Extraction
+      ↓
+PatchCore Anomaly Detection
+      ↓
+Spatial Anomaly Analysis
+      ↓
+Decision Engine
+      ↓
+PASS / REVIEW / FAIL
+      ↓
+Heatmap + Confidence + Inspection Log
+      ↓
+Supervisor Dashboard
+```
+
+The system learns the visual characteristics of normal products instead of requiring a large manually labelled defect dataset.
+
+### Current Prototype
+
+The current prototype uses:
+
+* 21 normal product images
+* 23 defect images for validation/evaluation
+* A teal/cyan circular water-cap product
+* Canonical 224 × 224 ROI extraction
+* PatchCore with a ResNet18 backbone
+* Spatial anomaly features
+* Live inspection interface
+* Configurable pass/fail threshold
+* Inspection history
+* Daily inspection statistics
+* Anomaly heatmap visualization
+
+---
+
+# 2. Key Features
+
+## AI-Based Anomaly Detection
+
+VisionQC uses **PatchCore** to learn the visual characteristics of normal products and identify deviations in new samples.
+
+The current implementation uses:
+
+* ResNet18 backbone
+* `layer2` and `layer3` feature layers
+* 9 nearest neighbours
+* Canonical 224 × 224 product ROI
+
+The system does not require every possible defect to be manually labelled during normal-model training.
+
+---
+
+## Product Detection
+
+Before anomaly detection, the system identifies the actual product in the image.
+
+The detector was designed around the geometry and appearance of the real water-cap dataset rather than relying only on generic circular Hough detection.
+
+It considers:
+
+* HSV colour characteristics
+* Lab colour characteristics
+* Saturation/value
+* Morphological structure
+* Contours
+* Circularity
+* Aspect ratio
+* Product centrality
+* Occupancy
+* Teal/cyan colour ratio
+* Alignment
+
+The current detector successfully detected all available evaluation images in the prototype dataset.
+
+---
+
+## Canonical ROI Extraction
+
+Once the product is detected, VisionQC extracts a standardized region around it.
+
+The ROI pipeline:
+
+```text
+Original Image
+      ↓
+Product Bounding Box
+      ↓
+Square Crop Around Product
+      ↓
+30% Contextual Padding
+      ↓
+Boundary Clamping
+      ↓
+224 × 224 Canonical ROI
+```
+
+This reduces the influence of:
+
+* Camera framing
+* Background
+* Product position
+* Different image dimensions
+
+and gives PatchCore a consistent representation of the product.
+
+---
+
+## Anomaly Heatmap
+
+VisionQC generates a spatial anomaly map showing **where the model detects visual deviation**.
+
+The heatmap is generated from PatchCore's anomaly map and overlaid on the canonical product ROI.
+
+This helps a supervisor understand that the system is not simply returning a numerical score, but is also identifying the regions contributing to the anomaly.
+
+---
+
+## PASS / REVIEW / FAIL Decision
+
+The inspection system supports three primary outcomes:
+
+| Result     | Meaning                                                           |
+| ---------- | ----------------------------------------------------------------- |
+| **PASS**   | Product is within the configured operating range                  |
+| **REVIEW** | Score is close to the configured threshold and should be reviewed |
+| **FAIL**   | Product shows significant deviation from learned normal           |
+
+There is also:
+
+| Result                 | Meaning                                       |
+| ---------------------- | --------------------------------------------- |
+| **INSPECTION_INVALID** | Image/product could not be reliably inspected |
+
+The supervisor can change the operating threshold through the Settings interface.
+
+---
+
+## Confidence Indicator
+
+VisionQC displays a confidence-style inspection value based on the distance of the anomaly score from the operating threshold.
+
+**Important:** this value is an inspection-confidence heuristic and is **not currently a calibrated probability of defect**.
+
+---
+
+## Live Camera Inspection
+
+The frontend supports camera-based inspection through the browser's camera API.
+
+The intended workflow is:
+
+```text
+Camera
+  ↓
+Capture Product
+  ↓
+Upload to Backend
+  ↓
+AI Inspection
+  ↓
+Result + Score + Heatmap
+```
+
+The frontend is designed to support webcam and mobile-browser camera workflows.
+
+---
+
+## Inspection Logging
+
+Every inspection is stored in the application database.
+
+Recorded information includes:
+
+* Inspection ID
+* Filename
+* Timestamp
+* Anomaly score
+* Threshold
+* Decision
+* Confidence
+* Reason
+* Image quality status
+* Product detection status
+* Alignment status
+* Original image
+* ROI
+* Heatmap
+* Supervisor feedback
+
+---
+
+## Supervisor Analytics
+
+The application provides inspection statistics including:
+
+* Total inspections
+* Passed inspections
+* Failed inspections
+* Reviews
+* Invalid inspections
+* Rejection rate
+
+A dedicated analytics page provides a supervisor-oriented view of inspection activity.
+
+---
+
+# 3. Technology Stack
+
+## Machine Learning / Computer Vision
+
+* Python
+* PyTorch
+* Anomalib
+* PatchCore
+* OpenCV
+* NumPy
+* Pillow
+* Scikit-learn
+
+## Backend
+
+* Python
+* FastAPI
+* SQLAlchemy
+* SQLite
+* Uvicorn
+
+## Frontend
+
+* React
+* TypeScript
+* Vite
+* CSS
+* Browser MediaDevices API
+
+## Development
+
+* Git
+* GitHub
+* Visual Studio Code
+* Python virtual environment
+
+---
+
+# 4. Architecture / Workflow
+
+## System Architecture
+
+```text
+                    ┌─────────────────────┐
+                    │   Camera / Image    │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │   React Frontend    │
+                    │  Live Inspection    │
+                    └──────────┬──────────┘
+                               │
+                         HTTP / API
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │    FastAPI Backend  │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │ Image Quality Check │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │ Product Detection   │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │ Canonical ROI       │
+                    │ 224 × 224           │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │ PatchCore + ResNet18│
+                    └──────────┬──────────┘
+                               │
+                    ┌──────────┴──────────┐
+                    ▼                     ▼
+          ┌─────────────────┐   ┌──────────────────┐
+          │ Anomaly Score   │   │ Anomaly Map      │
+          └────────┬────────┘   └────────┬─────────┘
+                   │                     │
+                   ▼                     ▼
+          ┌─────────────────────────────────────┐
+          │       Decision / Spatial Analysis   │
+          └──────────────────┬──────────────────┘
+                             │
+                             ▼
+                 ┌────────────────────────┐
+                 │ PASS / REVIEW / FAIL   │
+                 └────────────┬───────────┘
+                              │
+                ┌─────────────┼──────────────┐
+                ▼             ▼              ▼
+           Heatmap        Inspection      Analytics
+                          Database        Dashboard
+```
+
+---
+
+## Inspection Workflow
+
+### Step 1 — Image Acquisition
+
+A product image is captured using a camera or supplied as an image file.
+
+### Step 2 — Image Quality Validation
+
+The backend checks whether the image can be processed reliably.
+
+### Step 3 — Product Detection
+
+The product detector identifies the water-cap and determines its bounding box and alignment.
+
+### Step 4 — Canonical ROI
+
+The detected product is converted into a standardized 224 × 224 ROI.
+
+### Step 5 — PatchCore
+
+The ROI is passed through the trained PatchCore model.
+
+PatchCore compares the extracted feature representation against the learned normal feature memory bank.
+
+### Step 6 — Spatial Analysis
+
+The anomaly map is analyzed to obtain spatial characteristics such as:
+
+* Central anomaly fraction
+* Border anomaly fraction
+* Anomaly centroid
+* Centroid distance
+* Largest anomalous region
+* Anomaly mass
+
+### Step 7 — Decision
+
+The anomaly score is compared with the supervisor-configured operating threshold.
+
+The system returns:
+
+```text
+PASS
+REVIEW
+FAIL
+```
+
+or `INSPECTION_INVALID` if the inspection itself is unreliable.
+
+### Step 8 — Visualization
+
+The frontend displays:
+
+* Result
+* Anomaly score
+* Threshold
+* Confidence indicator
+* Product image
+* Anomaly heatmap
+* Inspection explanation
+
+### Step 9 — Logging
+
+The inspection is stored for later review and analytics.
+
+---
+
+# 5. Project Structure
 
 ```text
 visionqc/
-├── .gitignore
-├── README.md
-├── docker-compose.yml
+│
 ├── backend/
-│   ├── .env
-│   ├── requirements.txt
-│   ├── app/
-│   │   ├── main.py
-│   │   ├── api/
-│   │   │   ├── inspect.py
-│   │   │   ├── inspections.py
-│   │   │   ├── settings.py
-│   │   │   └── stats.py
-│   │   ├── core/
-│   │   │   ├── config.py
-│   │   │   └── constants.py
-│   │   ├── database/
-│   │   │   ├── database.py
-│   │   │   ├── models.py
-│   │   │   └── schemas.py
-│   │   ├── ml/
-│   │   │   └── inference_adapter.py
-│   │   └── services/
-│   │       ├── inspection_service.py
-│   │       ├── storage_service.py
-│   │       └── threshold_service.py
-│   └── tests/
-│       ├── test_inspect.py
-│       ├── test_settings.py
-│       └── test_stats.py
-├── data/
-│   ├── products/water_cap_v1/
-│   │   ├── normal/                # 21 product images
-│   │   ├── validation/            # currently empty
-│   │   └── defects/               # 23 product images
-│   ├── normal/{train,validation}/
-│   ├── defects/test/
-│   ├── samples/
-│   ├── evaluation/
-│   │   ├── roi_candidates/{small,medium,large}/{normal,defects}/
-│   │   ├── roi_test/{normal,defects}/
-│   │   ├── stable_region/
-│   │   ├── patchcore_heatmaps/{normal,defects}/
-│   │   ├── normalized_contact_sheet/
-│   │   └── Patchcore/water_cap_evaluation/latest/images/{normal,defects}/
-│   ├── inspections/
-│   │   ├── _temporary_roi/
-│   │   ├── heatmaps/
-│   │   └── processed/
-│   ├── heatmaps/
-│   └── inspection/
-├── database/                      # planned database package
+│   └── app/
+│       ├── api/
+│       │   ├── inspect.py
+│       │   ├── inspections.py
+│       │   ├── settings.py
+│       │   └── stats.py
+│       │
+│       ├── database/
+│       ├── ml/
+│       │   └── inference_adapter.py
+│       │
+│       ├── services/
+│       │   └── inspection_service.py
+│       │
+│       └── main.py
+│
 ├── frontend/
-│   ├── package.json
-│   ├── vite.config.ts
 │   ├── public/
 │   └── src/
-│       ├── App.tsx
-│       ├── main.tsx
 │       ├── components/
-│       │   ├── Camera/
-│       │   ├── Heatmap/
-│       │   ├── InspectionResult/
-│       │   ├── StatsCard/
-│       │   └── ThresholdControl/
-│       ├── hooks/useCamera.ts
-│       ├── pages/{Dashboard,Inspection}.tsx
-│       ├── services/api.ts
-│       └── types/inspection.ts
-├── ml/
-│   ├── README.md
-│   ├── training/{train.py,config.yaml}
-│   ├── inference/{inspect.py,preprocessing.py}
-│   └── evaluation/{evaluate.py,results/}
+│       ├── hooks/
+│       ├── pages/
+│       ├── services/
+│       ├── styles/
+│       ├── App.tsx
+│       └── main.tsx
+│
+├── vision/
+│   ├── product_detector.py
+│   ├── cap_roi.py
+│   ├── spatial_features.py
+│   ├── decision_engine.py
+│   └── run_patchcore_inspection.py
+│
 ├── models/
-│   ├── exported/
-│   ├── patchcore/{checkpoint,config}/
-│   ├── patchcore_water_cap/
-│   │   └── Patchcore/water_cap_v1/{latest,v0/weights/lightning}/
-│   ├── patchcore_water_cap_v2/
-│   │   └── Patchcore/
-│   │       ├── water_cap_v1_roi80/{latest,v0/weights/lightning}/
-│   │       ├── water_cap_v1_roi80_evaluation/latest/images/{defects,normal}/
-│   │       └── water_cap_v1_roi80_raw/latest/images/{defects,normal}/
-│   └── visionqc_resnet18/          # ResNet reference-model output
-├── results/
-│   └── Patchcore/
-│       ├── latest/images/{defects,processed}/
-│       └── water_cap_evaluation/latest/images/{defects,normal}/
-├── scripts/{setup.py,run_dev.py}
-├── storage/
-│   ├── inspections/{images,heatmaps}/
-│   └── visionqc.db
-└── vision/                          # active Python prototype scripts
-	├── analyze_image_composition.py
-	├── analyze_patchcore_maps.py
-	├── anomaly_detector.py
-	├── calibrate_patchcore_threshold.py
-	├── create_normalized_contact_sheet.py
-	├── create_roi_candidates.py
-	├── decision_engine.py
-	├── evaluate_patchcore.py
-	├── evaluate_patchcore_v2.py
-	├── evaluate_patchcore_v2_raw.py
-	├── feature_extractor.py
-	├── find_stable_product_region.py
-	├── generate_inspection_heatmap.py
-	├── inference.py
-	├── inspect_dataset.py
-	├── inspect_patchcore_heatmaps.py
-	├── local_heatmap.py
-	├── resnet_anomaly_detector.py
-	├── run_patchcore_auto.py
-	├── run_patchcore_inspection.py
-	├── test_roi_detection.py
-	├── train_patchcore.py
-	└── train_patchcore_v2.py
+│   └── patchcore_water_cap_v4/
+│
+├── data/
+│   ├── products/
+│   ├── evaluation/
+│   ├── database/
+│   └── inspections/
+│
+├── requirements.txt
+└── README.md
 ```
 
-## Implemented So Far
+---
 
-- **Classical baseline:** `vision/anomaly_detector.py` extracts color histograms and downsampled grayscale pixels, trains an `IsolationForest` on normal images, and reports predictions for the normal and defect folders.
-- **ResNet-18 feature experiments:** `vision/feature_extractor.py` extracts pretrained ResNet-18 embeddings. `vision/inference.py` builds a median reference feature map from normal images, scores feature-map deviations, estimates a coarse anomaly region, and can save a heatmap and JSON result. The reference uses the `layer4` feature map.
-- **PatchCore experiments:** `vision/train_patchcore.py` and the v2 scripts train/evaluate PatchCore with a ResNet-18 backbone. The v2 training script uses `layer2` and `layer3`, expects 21 normal images in `data/evaluation/roi_candidates/large/normal`, and writes model output under `models/patchcore_water_cap_v2/`.
-- **Inspection decisions:** `vision/decision_engine.py` converts an anomaly score into `PASS`, `REVIEW`, or `FAIL`, and can return `INSPECTION_INVALID` when a quality, product-detection, alignment, or score check fails. Confidence is a score-distance heuristic, not a probability.
-- **Inspection artifacts:** `vision/run_patchcore_inspection.py` runs PatchCore on one ROI image, saves its anomaly map as a NumPy file, applies the decision engine, and writes an inspection JSON record. `vision/generate_inspection_heatmap.py` renders a saved anomaly map over its source image.
-- **Dataset utilities:** scripts in `vision/` create contact sheets, inspect PatchCore maps, examine image composition, and explore candidate/stable product regions.
+# 6. Dataset / API Information
 
-## Current Data
+## Dataset
 
-The product-specific image folders are under `data/products/water_cap_v1/`:
+The prototype dataset contains images of a single product type: a teal/cyan circular water-cap.
 
-- `normal/`: 21 images currently present.
-- `defects/`: 23 images currently present.
-- `validation/`: currently empty.
+Current dataset:
 
-The PatchCore v2 scripts use a separate ROI dataset under `data/evaluation/roi_candidates/large/`, with `normal/` and `defects/` subfolders. Keep the training and evaluation images organized as expected by those scripts.
+| Category | Images |
+| -------- | -----: |
+| Normal   |     21 |
+| Defects  |     23 |
+| Total    |     44 |
 
-## Running The Scripts
+Normal images are used to establish the visual representation of acceptable products.
 
-Run commands from the project root. Install compatible versions of the packages imported by the selected script first; dependencies are not pinned in `backend/requirements.txt` yet. The vision scripts use packages including PyTorch, torchvision, anomalib, NumPy, Pillow, Matplotlib, OpenCV, and scikit-learn.
+Defect images are used for evaluation and validation of the prototype.
 
-Train the PatchCore v2 model:
+The dataset is intentionally small because the project is designed around **few-shot/one-class anomaly detection**, where the model primarily learns from normal examples.
+
+### Dataset Limitations
+
+The current dataset is not large enough to establish production-grade statistical performance across:
+
+* Different manufacturing batches
+* Different lighting conditions
+* Different cameras
+* Different product variants
+* Large numbers of defect types
+* Severe physical deformation
+* Environmental changes
+
+Further data collection is required before deployment in an industrial production environment.
+
+---
+
+# 7. Model Information
+
+The current production prototype uses **PatchCore V4**.
+
+### Model Configuration
+
+```text
+Backbone:       ResNet18
+Feature layers: layer2, layer3
+Neighbours:     9
+Input:          224 × 224 canonical ROI
+Inference:      CPU-compatible
+```
+
+The model was trained using canonical ROIs generated from the normal-product images.
+
+### Validation
+
+The final validation experiment used:
+
+* 15 normal images for training
+* 6 unseen normal images
+* 23 unseen defect images
+
+The experiment demonstrated that the raw PatchCore anomaly score alone does **not provide perfect separation** between the current normal and defect sets.
+
+Therefore, the prototype intentionally treats the PatchCore score as an anomaly signal rather than claiming it is a perfect binary classifier.
+
+This is also why the system provides a **REVIEW** state instead of forcing every borderline inspection into PASS or FAIL.
+
+---
+
+# 8. Backend API
+
+The FastAPI backend exposes endpoints for inspection, settings, statistics, and inspection history.
+
+## Health
+
+```http
+GET /api/health
+```
+
+Returns:
+
+```json
+{
+  "status": "ok"
+}
+```
+
+## Inspection
+
+```http
+POST /api/inspect
+```
+
+Accepts:
+
+* JPEG
+* PNG
+* WebP
+
+The image is processed through the complete VisionQC pipeline.
+
+## Threshold
+
+```http
+GET /api/settings/threshold
+```
+
+Returns the current inspection threshold.
+
+```http
+PUT /api/settings/threshold
+```
+
+Updates the supervisor-configured threshold.
+
+## Statistics
+
+```http
+GET /api/stats/today
+```
+
+Returns today's:
+
+* Total inspections
+* Passed
+* Failed
+* Reviews
+* Invalid inspections
+* Rejection rate
+
+## Inspection History
+
+```http
+GET /api/inspections
+```
+
+Returns recorded inspection results.
+
+---
+
+# 9. Setup & Installation
+
+## Requirements
+
+Recommended environment:
+
+* Python 3.10+
+* Node.js 18+
+* npm
+* Git
+
+---
+
+## Clone Repository
+
+```bash
+git clone https://github.com/xApate0nx/Byte-Me-VisionQC.git
+cd Byte-Me-VisionQC
+```
+
+---
+
+## Python Environment
+
+Create a virtual environment:
+
+### Windows
 
 ```powershell
-python vision/train_patchcore_v2.py
+python -m venv .venv
 ```
 
-Evaluate raw PatchCore scores on the configured ROI dataset:
+Activate it:
 
 ```powershell
-python vision/evaluate_patchcore_v2_raw.py
+.\.venv\Scripts\Activate.ps1
 ```
 
-Run a PatchCore inspection on one ROI image:
+Install Python dependencies:
 
 ```powershell
-python vision/run_patchcore_inspection.py "data/evaluation/roi_candidates/large/defects/example.jpg"
+pip install -r requirements.txt
 ```
 
-Generate a visual heatmap from the image and anomaly map paths printed by the inspection script:
+---
+
+## Start Backend
+
+From the project root:
 
 ```powershell
-python vision/generate_inspection_heatmap.py "path/to/image.jpg" "data/inspections/heatmaps/example_anomaly_map.npy"
+.\.venv\Scripts\python.exe -m uvicorn backend.app.main:app --host 0.0.0.0 --port 8000
 ```
 
-The PatchCore training, evaluation, and inspection scripts are configured to use the CPU. The ResNet feature-map experiment selects CUDA when available. Check the script paths and directories if your local data layout differs.
+The backend will be available at:
 
-## Threshold Status
+```text
+http://localhost:8000
+```
 
-`vision/calibrate_patchcore_threshold.py` compares stored raw scores for 10 normal and 23 defect samples. The configured PatchCore decision threshold is `12.3785223961`, the midpoint between the highest listed normal score (`12.3268375397`) and the lowest listed defect score (`12.4302072525`). This separates those recorded samples, but it is not a production threshold: it was selected from a small evaluation set and needs independent validation on more data.
+Health check:
 
-The end-to-end PatchCore runner currently passes image quality, product detection, and alignment as valid. The decision engine supports invalid states, but real camera checks, product detection, and alignment measurement are not yet wired into the inspection flow.
+```text
+http://localhost:8000/api/health
+```
 
-## Project Status
+---
 
-The active implementation is in `vision/`. The `backend/`, `frontend/`, top-level `ml/`, database, and scripts directories currently contain the planned scaffold, not a functioning API, web interface, training package, or database integration. The frontend package manifest is also not yet configured with dependencies or run scripts.
+## Start Frontend
+
+Open another terminal:
+
+```powershell
+cd frontend
+npm install
+npm run dev
+```
+
+The frontend runs on the Vite development server, normally:
+
+```text
+http://localhost:5174
+```
+
+The frontend is configured to proxy:
+
+```text
+/api
+/storage
+```
+
+to the FastAPI backend.
+
+---
+
+# 10. Running an Inspection Directly
+
+The PatchCore inspection pipeline can also be executed directly from the command line.
+
+Example:
+
+```powershell
+python vision\run_patchcore_inspection.py "path\to\image.jpg"
+```
+
+A custom threshold can be supplied:
+
+```powershell
+python vision\run_patchcore_inspection.py "path\to\image.jpg" 14.0
+```
+
+The pipeline performs:
+
+```text
+Image
+ ↓
+Product Detection
+ ↓
+Canonical ROI
+ ↓
+PatchCore
+ ↓
+Anomaly Map
+ ↓
+Spatial Features
+ ↓
+Decision
+```
+
+---
+
+# 11. Screenshots / Demo
+
+The repository contains frontend sample images under:
+
+```text
+frontend/public/samples/
+```
+
+including:
+
+```text
+normal_cap.jpg
+defective_cap.jpg
+```
+
+The application interface includes:
+
+### Live Inspection
+
+Provides the main inspection workflow with camera/image capture, product framing, inspection result, anomaly score, and heatmap.
+
+### Inspection Detail
+
+Displays the inspected image, ROI, anomaly visualization, score, threshold, and decision information.
+
+### Analytics
+
+Displays inspection statistics and rejection information.
+
+### Settings
+
+Allows the supervisor to configure the inspection threshold.
+
+### Demo Flow
+
+A typical demonstration is:
+
+```text
+1. Open VisionQC
+2. Start Live Inspection
+3. Present/capture a water-cap
+4. Submit the inspection
+5. Wait for AI analysis
+6. View PASS / REVIEW / FAIL
+7. Inspect the anomaly heatmap
+8. Open inspection history
+9. Adjust threshold from Settings
+10. View updated analytics
+```
+
+---
+
+# 12. Limitations
+
+The current project is a functional prototype and has several limitations.
+
+### Dataset Size
+
+The current dataset contains only 44 images.
+
+More production data is required for robust generalization.
+
+### Single Product Type
+
+The current model is designed for one water-cap product.
+
+A new product would require its own normal reference dataset and model configuration.
+
+### Lighting and Camera Variability
+
+Large changes in:
+
+* illumination
+* camera angle
+* distance
+* background
+* reflections
+
+can affect visual anomaly detection.
+
+### PatchCore Score Overlap
+
+The current validation demonstrates overlap between normal and defect anomaly scores.
+
+Therefore, the raw anomaly score should not be interpreted as a guaranteed defect probability.
+
+### Confidence Calibration
+
+The displayed confidence value is currently a threshold-distance heuristic rather than a statistically calibrated probability.
+
+### Production Hardware
+
+The current implementation is CPU-compatible and suitable for prototyping.
+
+Industrial deployment would benefit from dedicated GPU inference hardware and optimized model serving.
+
+### Mobile Deployment
+
+Browser-based mobile camera integration is part of the intended workflow, but reliable deployment across different mobile browsers, network configurations, and HTTPS environments requires additional testing.
+
+---
+
+# 13. Future Scope
+
+VisionQC can be extended into a larger industrial inspection platform.
+
+## Multi-Product Support
+
+Support multiple products with:
+
+```text
+Product
+   ↓
+Product-specific detector
+   ↓
+Product-specific ROI
+   ↓
+Product-specific anomaly model
+```
+
+---
+
+## Larger Industrial Dataset
+
+Future versions can incorporate:
+
+* Thousands of normal samples
+* Multiple production batches
+* Multiple cameras
+* Multiple lighting conditions
+* Multiple defect categories
+
+---
+
+## Improved Model Calibration
+
+Future work can investigate:
+
+* Threshold calibration
+* ROC/PR analysis
+* Reliability calibration
+* Better confidence estimation
+* Larger validation datasets
+* Statistical process-control integration
+
+---
+
+## Advanced Anomaly Fusion
+
+Spatial features can be combined with PatchCore scores using a properly validated decision layer once enough data is available.
+
+Potential future features include:
+
+* Learned anomaly fusion
+* Temporal inspection trends
+* Batch-level anomaly monitoring
+* Defect clustering
+* Automatic defect categorization
+
+---
+
+## Edge Deployment
+
+The system can eventually be deployed on:
+
+* Industrial PCs
+* NVIDIA edge devices
+* Factory inspection stations
+* Dedicated camera systems
+
+to enable low-latency inspection without relying on cloud inference.
+
+---
+
+## Manufacturing Integration
+
+Future versions could integrate with:
+
+* PLC systems
+* Conveyor systems
+* Industrial cameras
+* Automated rejection mechanisms
+* MES/ERP systems
+* Production-line dashboards
+
+This would allow VisionQC to progress from an inspection assistant into a complete automated quality-control system.
+
+---
+
+# 14. Team Members
+
+| Member               | Role        |
+| -------------------- | ----------- |
+| **Ruthvik Narvekar** | Leader      |
+| **Vaishnavi Mankar** | Team Member |
+| **Hitesh Yelve**     | Team Member |
+| **Niharika Sonkar**  | Team Member |
+
+---
+
+# 15. Project Status
+
+**Current status: Functional prototype**
+
+Implemented:
+
+* [x] Normal-product learning pipeline
+* [x] Product detection
+* [x] Canonical ROI extraction
+* [x] PatchCore anomaly detection
+* [x] Spatial anomaly analysis
+* [x] Heatmap generation
+* [x] PASS / REVIEW / FAIL decision flow
+* [x] Configurable inspection threshold
+* [x] Inspection database
+* [x] Inspection history
+* [x] Daily analytics
+* [x] React frontend
+* [x] Live camera workflow
+* [x] Backend REST API
+* [x] Supervisor settings
+* [x] Sample demonstration images
+
+---
+
+# 16. Repository
+
+**GitHub:**
+https://github.com/xApate0nx/Byte-Me-VisionQC
+
+VisionQC is developed as a modular system so that the computer-vision pipeline, AI model, backend services, and frontend interface can evolve independently toward a production-ready industrial inspection solution.
