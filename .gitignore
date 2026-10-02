@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Environment
+.env
+
+# Node
+node_modules/
+dist/
+
+# ML / model artifacts
+models/**/*.pt
+models/**/*.pth
+models/**/*.ckpt
+models/**/*.onnx
+models/**/*.bin
+models/**/*.xml
+
+# Runtime database
+storage/visionqc.db
+
+# Runtime inspection data
+storage/inspections/images/*
+storage/inspections/heatmaps/*
+
+# IDE / OS
+.DS_Store
+.idea/
+.vscode/
