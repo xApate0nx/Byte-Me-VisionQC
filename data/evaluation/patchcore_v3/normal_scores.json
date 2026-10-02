@@ -1,0 +1,127 @@
+{
+  "model": "PatchCore v3",
+  "checkpoint": "C:\\Users\\Ruthvik\\OneDrive\\Desktop\\visionqc\\models\\patchcore_water_cap_v3\\Patchcore\\water_cap_v1_canonical_roi\\v0\\weights\\lightning\\model.ckpt",
+  "representation": "detector-generated canonical ROI",
+  "count": 21,
+  "statistics": {
+    "count": 21,
+    "minimum": 9.796072959899902,
+    "maximum": 17.210865020751953,
+    "mean": 10.985234078906831,
+    "median": 10.100668907165527,
+    "std": 1.9177312174296541,
+    "p10": 9.84483814239502,
+    "p25": 9.988798141479492,
+    "p75": 10.389568328857422,
+    "p90": 13.934226989746094,
+    "p95": 14.137473106384277,
+    "p99": 16.59618663787842
+  },
+  "results": [
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.44.15_new_roi.png",
+      "score": 10.100668907165527,
+      "label": "normal"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.44.17_new_roi.png",
+      "score": 9.931741714477539,
+      "label": "normal"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.44.19_new_roi.png",
+      "score": 10.180120468139648,
+      "label": "normal"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.44.20_new_roi.png",
+      "score": 9.996594429016113,
+      "label": "normal"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.44.21_new_roi.png",
+      "score": 13.934226989746094,
+      "label": "normal"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.44.22_new_roi.png",
+      "score": 10.154657363891602,
+      "label": "normal"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.44.23_new_roi.png",
+      "score": 9.796072959899902,
+      "label": "normal"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.44.24_new_roi.png",
+      "score": 10.386385917663574,
+      "label": "normal"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.44.26_new_roi.png",
+      "score": 10.389568328857422,
+      "label": "normal"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.44.29_new_roi.png",
+      "score": 11.060256004333496,
+      "label": "normal"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.44.35_new_roi.png",
+      "score": 14.137473106384277,
+      "label": "normal"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.44.37_new_roi.png",
+      "score": 9.84483814239502,
+      "label": "normal"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.44.38_new_roi.png",
+      "score": 10.09268569946289,
+      "label": "normal"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.44.43_new_roi.png",
+      "score": 10.05899715423584,
+      "label": "normal"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.44.45_new_roi.png",
+      "score": 9.988798141479492,
+      "label": "normal"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.44.47_new_roi.png",
+      "score": 9.81099796295166,
+      "label": "normal"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.44.48_new_roi.png",
+      "score": 17.210865020751953,
+      "label": "normal"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.44.50_new_roi.png",
+      "score": 9.99838924407959,
+      "label": "normal"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.44.52_new_roi.png",
+      "score": 10.27469539642334,
+      "label": "normal"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.44.53_new_roi.png",
+      "score": 9.974906921386719,
+      "label": "normal"
+    },
+    {
+      "filename": "wsp_new_roi.png",
+      "score": 13.366975784301758,
+      "label": "normal"
+    }
+  ]
+}

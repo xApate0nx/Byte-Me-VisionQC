@@ -1,0 +1,499 @@
+{
+  "seed": 42,
+  "training_normal_count": 15,
+  "unseen_normal_count": 6,
+  "unseen_defect_count": 23,
+  "checkpoint": "C:\\Users\\Ruthvik\\OneDrive\\Desktop\\visionqc\\models\\patchcore_water_cap_v4\\Patchcore\\water_cap_v1_final_validation\\latest\\weights\\lightning\\model.ckpt",
+  "metrics": {
+    "unseen_normal_count": 6,
+    "unseen_defect_count": 23,
+    "normal_min": 13.241497993469238,
+    "normal_median": 16.33996868133545,
+    "normal_mean": 16.313578764597576,
+    "normal_max": 19.23674964904785,
+    "defect_min": 13.567729949951172,
+    "defect_median": 16.421125411987305,
+    "defect_mean": 16.382699261540953,
+    "defect_max": 20.169713973999023,
+    "highest_normal": 19.23674964904785,
+    "lowest_defect": 13.567729949951172,
+    "gap": -5.66901969909668,
+    "perfect_separation": false,
+    "threshold_sweep": [
+      {
+        "threshold": 13.0,
+        "normal_false_rejects": 6,
+        "defects_detected": 23,
+        "defect_misses": 0,
+        "false_reject_rate": 1.0,
+        "defect_detection_rate": 1.0,
+        "accuracy": 0.7931034482758621
+      },
+      {
+        "threshold": 13.5,
+        "normal_false_rejects": 5,
+        "defects_detected": 23,
+        "defect_misses": 0,
+        "false_reject_rate": 0.8333333333333334,
+        "defect_detection_rate": 1.0,
+        "accuracy": 0.8275862068965517
+      },
+      {
+        "threshold": 14.0,
+        "normal_false_rejects": 5,
+        "defects_detected": 21,
+        "defect_misses": 2,
+        "false_reject_rate": 0.8333333333333334,
+        "defect_detection_rate": 0.9130434782608695,
+        "accuracy": 0.7586206896551724
+      },
+      {
+        "threshold": 14.5,
+        "normal_false_rejects": 5,
+        "defects_detected": 20,
+        "defect_misses": 3,
+        "false_reject_rate": 0.8333333333333334,
+        "defect_detection_rate": 0.8695652173913043,
+        "accuracy": 0.7241379310344828
+      },
+      {
+        "threshold": 15.0,
+        "normal_false_rejects": 5,
+        "defects_detected": 15,
+        "defect_misses": 8,
+        "false_reject_rate": 0.8333333333333334,
+        "defect_detection_rate": 0.6521739130434783,
+        "accuracy": 0.5517241379310345
+      },
+      {
+        "threshold": 15.5,
+        "normal_false_rejects": 5,
+        "defects_detected": 13,
+        "defect_misses": 10,
+        "false_reject_rate": 0.8333333333333334,
+        "defect_detection_rate": 0.5652173913043478,
+        "accuracy": 0.4827586206896552
+      },
+      {
+        "threshold": 16.0,
+        "normal_false_rejects": 5,
+        "defects_detected": 13,
+        "defect_misses": 10,
+        "false_reject_rate": 0.8333333333333334,
+        "defect_detection_rate": 0.5652173913043478,
+        "accuracy": 0.4827586206896552
+      },
+      {
+        "threshold": 16.5,
+        "normal_false_rejects": 3,
+        "defects_detected": 10,
+        "defect_misses": 13,
+        "false_reject_rate": 0.5,
+        "defect_detection_rate": 0.43478260869565216,
+        "accuracy": 0.4482758620689655
+      },
+      {
+        "threshold": 17.0,
+        "normal_false_rejects": 1,
+        "defects_detected": 8,
+        "defect_misses": 15,
+        "false_reject_rate": 0.16666666666666666,
+        "defect_detection_rate": 0.34782608695652173,
+        "accuracy": 0.4482758620689655
+      },
+      {
+        "threshold": 17.5,
+        "normal_false_rejects": 1,
+        "defects_detected": 4,
+        "defect_misses": 19,
+        "false_reject_rate": 0.16666666666666666,
+        "defect_detection_rate": 0.17391304347826086,
+        "accuracy": 0.3103448275862069
+      },
+      {
+        "threshold": 18.0,
+        "normal_false_rejects": 1,
+        "defects_detected": 4,
+        "defect_misses": 19,
+        "false_reject_rate": 0.16666666666666666,
+        "defect_detection_rate": 0.17391304347826086,
+        "accuracy": 0.3103448275862069
+      },
+      {
+        "threshold": 18.5,
+        "normal_false_rejects": 1,
+        "defects_detected": 4,
+        "defect_misses": 19,
+        "false_reject_rate": 0.16666666666666666,
+        "defect_detection_rate": 0.17391304347826086,
+        "accuracy": 0.3103448275862069
+      },
+      {
+        "threshold": 19.0,
+        "normal_false_rejects": 1,
+        "defects_detected": 4,
+        "defect_misses": 19,
+        "false_reject_rate": 0.16666666666666666,
+        "defect_detection_rate": 0.17391304347826086,
+        "accuracy": 0.3103448275862069
+      },
+      {
+        "threshold": 19.5,
+        "normal_false_rejects": 0,
+        "defects_detected": 4,
+        "defect_misses": 19,
+        "false_reject_rate": 0.0,
+        "defect_detection_rate": 0.17391304347826086,
+        "accuracy": 0.3448275862068966
+      },
+      {
+        "threshold": 20.0,
+        "normal_false_rejects": 0,
+        "defects_detected": 1,
+        "defect_misses": 22,
+        "false_reject_rate": 0.0,
+        "defect_detection_rate": 0.043478260869565216,
+        "accuracy": 0.2413793103448276
+      },
+      {
+        "threshold": 20.5,
+        "normal_false_rejects": 0,
+        "defects_detected": 0,
+        "defect_misses": 23,
+        "false_reject_rate": 0.0,
+        "defect_detection_rate": 0.0,
+        "accuracy": 0.20689655172413793
+      },
+      {
+        "threshold": 21.0,
+        "normal_false_rejects": 0,
+        "defects_detected": 0,
+        "defect_misses": 23,
+        "false_reject_rate": 0.0,
+        "defect_detection_rate": 0.0,
+        "accuracy": 0.20689655172413793
+      }
+    ]
+  },
+  "results": [
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.44.15_new_roi.png",
+      "category": "normal",
+      "label": 0,
+      "score": 16.56777000427246,
+      "central": 0.4385108330790357,
+      "border": 0.5614891669209643,
+      "centroid_distance": 0.07514925007336092,
+      "largest_region": 0.5926151968263655,
+      "mass": 0.38709625601768494
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.44.20_new_roi.png",
+      "category": "normal",
+      "label": 0,
+      "score": 16.010969161987305,
+      "central": 0.8684772657918828,
+      "border": 0.1315227342081172,
+      "centroid_distance": 0.23737962883656888,
+      "largest_region": 0.8916692096429661,
+      "mass": 0.4890047013759613
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.44.24_new_roi.png",
+      "category": "normal",
+      "label": 0,
+      "score": 19.23674964904785,
+      "central": 0.8355202929508697,
+      "border": 0.1644797070491303,
+      "centroid_distance": 0.256958038079312,
+      "largest_region": 1.0,
+      "mass": 0.3809826374053955
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.44.26_new_roi.png",
+      "category": "normal",
+      "label": 0,
+      "score": 16.112167358398438,
+      "central": 0.3689350015257858,
+      "border": 0.6310649984742143,
+      "centroid_distance": 0.290567108453204,
+      "largest_region": 0.6743973146170278,
+      "mass": 0.4770704209804535
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.44.48_new_roi.png",
+      "category": "normal",
+      "label": 0,
+      "score": 16.712318420410156,
+      "central": 0.6951480012206286,
+      "border": 0.30485199877937136,
+      "centroid_distance": 0.2675380122244578,
+      "largest_region": 0.9761977418370461,
+      "mass": 0.3728708028793335
+    },
+    {
+      "filename": "wsp_new_roi.png",
+      "category": "normal",
+      "label": 0,
+      "score": 13.241497993469238,
+      "central": 0.12664021971315229,
+      "border": 0.8733597802868477,
+      "centroid_distance": 0.2175397579872489,
+      "largest_region": 0.465669819957278,
+      "mass": 0.533173680305481
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.07_new_roi.png",
+      "category": "defect",
+      "label": 1,
+      "score": 13.85950756072998,
+      "central": 0.6332010985657613,
+      "border": 0.36679890143423866,
+      "centroid_distance": 0.27525006644798405,
+      "largest_region": 0.3567287152883735,
+      "mass": 0.49410635232925415
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.08_new_roi.png",
+      "category": "defect",
+      "label": 1,
+      "score": 16.421125411987305,
+      "central": 0.6231309124198963,
+      "border": 0.37686908758010373,
+      "centroid_distance": 0.12045669778811012,
+      "largest_region": 0.5401281660054928,
+      "mass": 0.3253192901611328
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.10_new_roi.png",
+      "category": "defect",
+      "label": 1,
+      "score": 14.233277320861816,
+      "central": 0.9185230393652731,
+      "border": 0.08147696063472688,
+      "centroid_distance": 0.09192177388163712,
+      "largest_region": 0.9185230393652731,
+      "mass": 0.3815627694129944
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.11_new_roi.png",
+      "category": "defect",
+      "label": 1,
+      "score": 17.38913917541504,
+      "central": 0.5190723222459567,
+      "border": 0.4809276777540433,
+      "centroid_distance": 0.30028289291868565,
+      "largest_region": 0.8788526090936832,
+      "mass": 0.46408984065055847
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.12 (1)_new_roi.png",
+      "category": "defect",
+      "label": 1,
+      "score": 17.030385971069336,
+      "central": 0.7238327738785475,
+      "border": 0.27616722612145256,
+      "centroid_distance": 0.18512248000740159,
+      "largest_region": 0.709490387549588,
+      "mass": 0.37656694650650024
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.12_new_roi.png",
+      "category": "defect",
+      "label": 1,
+      "score": 16.762523651123047,
+      "central": 0.7390906316753127,
+      "border": 0.2609093683246872,
+      "centroid_distance": 0.11818103206125295,
+      "largest_region": 0.5736954531583766,
+      "mass": 0.5011473298072815
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.13_new_roi.png",
+      "category": "defect",
+      "label": 1,
+      "score": 16.47528648376465,
+      "central": 0.7122368019530058,
+      "border": 0.2877631980469942,
+      "centroid_distance": 0.20160678771663815,
+      "largest_region": 0.7122368019530058,
+      "mass": 0.3891902565956116
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.14_new_roi.png",
+      "category": "defect",
+      "label": 1,
+      "score": 19.9945125579834,
+      "central": 0.8898382667073543,
+      "border": 0.11016173329264571,
+      "centroid_distance": 0.2653337821835594,
+      "largest_region": 1.0,
+      "mass": 0.4144812226295471
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.15 (1)_new_roi.png",
+      "category": "defect",
+      "label": 1,
+      "score": 19.612192153930664,
+      "central": 0.9060115959719255,
+      "border": 0.09398840402807446,
+      "centroid_distance": 0.1916434094587097,
+      "largest_region": 0.5791882819652121,
+      "mass": 0.42408686876296997
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.15 (2)_new_roi.png",
+      "category": "defect",
+      "label": 1,
+      "score": 19.600950241088867,
+      "central": 0.9096734818431492,
+      "border": 0.09032651815685078,
+      "centroid_distance": 0.1912393646950067,
+      "largest_region": 0.5480622520598109,
+      "mass": 0.41908523440361023
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.15_new_roi.png",
+      "category": "defect",
+      "label": 1,
+      "score": 20.169713973999023,
+      "central": 0.8944156240463839,
+      "border": 0.10558437595361611,
+      "centroid_distance": 0.26674460065918276,
+      "largest_region": 1.0,
+      "mass": 0.40640756487846375
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.16 (1)_new_roi.png",
+      "category": "defect",
+      "label": 1,
+      "score": 14.912589073181152,
+      "central": 0.9163869392737259,
+      "border": 0.08361306072627403,
+      "centroid_distance": 0.11046722594169758,
+      "largest_region": 0.8465059505645407,
+      "mass": 0.4753137230873108
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.16 (2)_new_roi.png",
+      "category": "defect",
+      "label": 1,
+      "score": 14.875459671020508,
+      "central": 1.0,
+      "border": 0.0,
+      "centroid_distance": 0.021844911332752553,
+      "largest_region": 1.0,
+      "mass": 0.37976202368736267
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.16_new_roi.png",
+      "category": "defect",
+      "label": 1,
+      "score": 17.301990509033203,
+      "central": 0.866646322856271,
+      "border": 0.13335367714372903,
+      "centroid_distance": 0.22160734643268118,
+      "largest_region": 0.6350320415013732,
+      "mass": 0.45997145771980286
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.17 (1)_new_roi.png",
+      "category": "defect",
+      "label": 1,
+      "score": 16.027437210083008,
+      "central": 0.904485810192249,
+      "border": 0.09551418980775099,
+      "centroid_distance": 0.21802143479199138,
+      "largest_region": 0.9231003967043027,
+      "mass": 0.4933484196662903
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.17 (2)_new_roi.png",
+      "category": "defect",
+      "label": 1,
+      "score": 16.994422912597656,
+      "central": 0.23863289594140982,
+      "border": 0.7613671040585902,
+      "centroid_distance": 0.11781591990323963,
+      "largest_region": 0.6444919133353677,
+      "mass": 0.44322001934051514
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.17 (3)_new_roi.png",
+      "category": "defect",
+      "label": 1,
+      "score": 17.297876358032227,
+      "central": 0.6386939273725969,
+      "border": 0.3613060726274031,
+      "centroid_distance": 0.28064492369113564,
+      "largest_region": 0.9835215135794935,
+      "mass": 0.40010058879852295
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.17_new_roi.png",
+      "category": "defect",
+      "label": 1,
+      "score": 14.628935813903809,
+      "central": 1.0,
+      "border": 0.0,
+      "centroid_distance": 0.020484802158600744,
+      "largest_region": 1.0,
+      "mass": 0.39047515392303467
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.18 (1)_new_roi.png",
+      "category": "defect",
+      "label": 1,
+      "score": 14.681144714355469,
+      "central": 0.49954226426609705,
+      "border": 0.500457735733903,
+      "centroid_distance": 0.269009031469781,
+      "largest_region": 0.8791577662496185,
+      "mass": 0.4461621046066284
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.18 (2)_new_roi.png",
+      "category": "defect",
+      "label": 1,
+      "score": 15.367850303649902,
+      "central": 0.4244736039060116,
+      "border": 0.5755263960939884,
+      "centroid_distance": 0.20479394401679651,
+      "largest_region": 0.6133658834299665,
+      "mass": 0.40646159648895264
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.18 (3)_new_roi.png",
+      "category": "defect",
+      "label": 1,
+      "score": 13.567729949951172,
+      "central": 0.38480317363442174,
+      "border": 0.6151968263655783,
+      "centroid_distance": 0.20330045802444235,
+      "largest_region": 0.7519072322245957,
+      "mass": 0.459682822227478
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.18_new_roi.png",
+      "category": "defect",
+      "label": 1,
+      "score": 15.071693420410156,
+      "central": 0.1632590784253891,
+      "border": 0.8367409215746109,
+      "centroid_distance": 0.16994022406660156,
+      "largest_region": 0.3967043027158987,
+      "mass": 0.4194537103176117
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.19_new_roi.png",
+      "category": "defect",
+      "label": 1,
+      "score": 14.526338577270508,
+      "central": 0.23893805309734514,
+      "border": 0.7610619469026548,
+      "centroid_distance": 0.2091114740369954,
+      "largest_region": 0.5587427525175466,
+      "mass": 0.40577852725982666
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+{
+  "model": "PatchCore v3",
+  "checkpoint": "C:\\Users\\Ruthvik\\OneDrive\\Desktop\\visionqc\\models\\patchcore_water_cap_v3\\Patchcore\\water_cap_v1_canonical_roi\\v0\\weights\\lightning\\model.ckpt",
+  "representation": "detector-generated canonical ROI",
+  "count": 23,
+  "statistics": {
+    "count": 23,
+    "minimum": 12.68233871459961,
+    "maximum": 19.549856185913086,
+    "mean": 15.595307350158691,
+    "median": 15.184597969055176,
+    "std": 1.7726077437420522,
+    "p10": 13.726648712158203,
+    "p25": 14.193053722381592,
+    "p75": 16.546493530273438,
+    "p90": 17.771198272705078,
+    "p95": 19.131814384460448,
+    "p99": 19.490966339111328
+  },
+  "results": [
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.07_new_roi.png",
+      "score": 12.68233871459961,
+      "label": "defect"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.08_new_roi.png",
+      "score": 15.87137222290039,
+      "label": "defect"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.10_new_roi.png",
+      "score": 13.71880054473877,
+      "label": "defect"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.11_new_roi.png",
+      "score": 17.778568267822266,
+      "label": "defect"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.12 (1)_new_roi.png",
+      "score": 16.063243865966797,
+      "label": "defect"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.12_new_roi.png",
+      "score": 17.741718292236328,
+      "label": "defect"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.13_new_roi.png",
+      "score": 15.645277976989746,
+      "label": "defect"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.14_new_roi.png",
+      "score": 19.282175064086914,
+      "label": "defect"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.15 (1)_new_roi.png",
+      "score": 15.016016006469727,
+      "label": "defect"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.15 (2)_new_roi.png",
+      "score": 14.986225128173828,
+      "label": "defect"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.15_new_roi.png",
+      "score": 19.549856185913086,
+      "label": "defect"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.16 (1)_new_roi.png",
+      "score": 14.784723281860352,
+      "label": "defect"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.16 (2)_new_roi.png",
+      "score": 13.758041381835938,
+      "label": "defect"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.16_new_roi.png",
+      "score": 16.473358154296875,
+      "label": "defect"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.17 (1)_new_roi.png",
+      "score": 16.61962890625,
+      "label": "defect"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.17 (2)_new_roi.png",
+      "score": 17.060604095458984,
+      "label": "defect"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.17 (3)_new_roi.png",
+      "score": 16.08759880065918,
+      "label": "defect"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.17_new_roi.png",
+      "score": 13.903465270996094,
+      "label": "defect"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.18 (1)_new_roi.png",
+      "score": 14.186066627502441,
+      "label": "defect"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.18 (2)_new_roi.png",
+      "score": 15.184597969055176,
+      "label": "defect"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.18 (3)_new_roi.png",
+      "score": 13.472074508666992,
+      "label": "defect"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.18_new_roi.png",
+      "score": 14.626276969909668,
+      "label": "defect"
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.19_new_roi.png",
+      "score": 14.200040817260742,
+      "label": "defect"
+    }
+  ]
+}

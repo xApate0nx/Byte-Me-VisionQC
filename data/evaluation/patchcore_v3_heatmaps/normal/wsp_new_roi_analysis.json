@@ -1,0 +1,33 @@
+{
+  "category": "normal",
+  "filename": "wsp_new_roi.png",
+  "model": "PatchCore v3",
+  "model_version": "patchcore_water_cap_v3",
+  "checkpoint": "C:\\Users\\Ruthvik\\OneDrive\\Desktop\\visionqc\\models\\patchcore_water_cap_v3\\Patchcore\\water_cap_v1_canonical_roi\\v0\\weights\\lightning\\model.ckpt",
+  "score": 13.366975784301758,
+  "anomaly_map": "C:\\Users\\Ruthvik\\OneDrive\\Desktop\\visionqc\\data\\evaluation\\patchcore_v3_heatmaps\\normal\\wsp_new_roi_anomaly_map.npy",
+  "heatmap": "C:\\Users\\Ruthvik\\OneDrive\\Desktop\\visionqc\\data\\evaluation\\patchcore_v3_heatmaps\\normal\\wsp_new_roi_heatmap.png",
+  "map_width": 256,
+  "map_height": 256,
+  "min": 5.167334079742432,
+  "max": 12.48585033416748,
+  "mean": 9.0280122756958,
+  "median": 9.046586990356445,
+  "p90": 10.444833755493164,
+  "p95": 10.855834007263184,
+  "p99": 11.694486618041992,
+  "max_x": 221,
+  "max_y": 167,
+  "hot_pixels_95": 3277,
+  "hot_percent_95": 5.00030517578125,
+  "hot_bbox": {
+    "x_min": 40,
+    "x_max": 243,
+    "y_min": 21,
+    "y_max": 243
+  },
+  "hot_center": {
+    "x": 141.5,
+    "y": 132.0
+  }
+}

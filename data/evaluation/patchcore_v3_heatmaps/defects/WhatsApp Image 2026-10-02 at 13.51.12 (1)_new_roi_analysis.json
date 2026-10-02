@@ -1,0 +1,33 @@
+{
+  "category": "defects",
+  "filename": "WhatsApp Image 2026-10-02 at 13.51.12 (1)_new_roi.png",
+  "model": "PatchCore v3",
+  "model_version": "patchcore_water_cap_v3",
+  "checkpoint": "C:\\Users\\Ruthvik\\OneDrive\\Desktop\\visionqc\\models\\patchcore_water_cap_v3\\Patchcore\\water_cap_v1_canonical_roi\\v0\\weights\\lightning\\model.ckpt",
+  "score": 16.063243865966797,
+  "anomaly_map": "C:\\Users\\Ruthvik\\OneDrive\\Desktop\\visionqc\\data\\evaluation\\patchcore_v3_heatmaps\\defects\\WhatsApp Image 2026-10-02 at 13.51.12 (1)_new_roi_anomaly_map.npy",
+  "heatmap": "C:\\Users\\Ruthvik\\OneDrive\\Desktop\\visionqc\\data\\evaluation\\patchcore_v3_heatmaps\\defects\\WhatsApp Image 2026-10-02 at 13.51.12 (1)_new_roi_heatmap.png",
+  "map_width": 256,
+  "map_height": 256,
+  "min": 5.908472537994385,
+  "max": 16.073667526245117,
+  "mean": 9.818001747131348,
+  "median": 9.391546249389648,
+  "p90": 12.172386169433594,
+  "p95": 13.485971450805664,
+  "p99": 15.324930191040039,
+  "max_x": 94,
+  "max_y": 100,
+  "hot_pixels_95": 3277,
+  "hot_percent_95": 5.00030517578125,
+  "hot_bbox": {
+    "x_min": 14,
+    "x_max": 121,
+    "y_min": 65,
+    "y_max": 245
+  },
+  "hot_center": {
+    "x": 67.5,
+    "y": 155.0
+  }
+}

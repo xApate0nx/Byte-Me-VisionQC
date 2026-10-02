@@ -1,0 +1,38 @@
+VisionQC — Defect New ROI PatchCore Test
+======================================================================
+
+Images tested: 23
+Minimum: 16.646669
+10th percentile: 17.264802
+25th percentile: 19.000989
+Median: 24.116632
+Mean: 22.361314
+75th percentile: 24.862049
+90th percentile: 25.885955
+Maximum: 27.124172
+Std deviation: 3.497216
+
+Individual scores:
+WhatsApp Image 2026-10-02 at 13.51.07_new_roi.png	17.112223
+WhatsApp Image 2026-10-02 at 13.51.08_new_roi.png	19.653650
+WhatsApp Image 2026-10-02 at 13.51.10_new_roi.png	18.026449
+WhatsApp Image 2026-10-02 at 13.51.11_new_roi.png	24.763742
+WhatsApp Image 2026-10-02 at 13.51.12 (1)_new_roi.png	25.622103
+WhatsApp Image 2026-10-02 at 13.51.12_new_roi.png	25.951918
+WhatsApp Image 2026-10-02 at 13.51.13_new_roi.png	24.116632
+WhatsApp Image 2026-10-02 at 13.51.14_new_roi.png	26.955322
+WhatsApp Image 2026-10-02 at 13.51.15 (1)_new_roi.png	24.826082
+WhatsApp Image 2026-10-02 at 13.51.15 (2)_new_roi.png	24.954620
+WhatsApp Image 2026-10-02 at 13.51.15_new_roi.png	27.124172
+WhatsApp Image 2026-10-02 at 13.51.16 (1)_new_roi.png	24.643070
+WhatsApp Image 2026-10-02 at 13.51.16 (2)_new_roi.png	19.611288
+WhatsApp Image 2026-10-02 at 13.51.16_new_roi.png	24.775072
+WhatsApp Image 2026-10-02 at 13.51.17 (1)_new_roi.png	24.786034
+WhatsApp Image 2026-10-02 at 13.51.17 (2)_new_roi.png	24.898016
+WhatsApp Image 2026-10-02 at 13.51.17 (3)_new_roi.png	24.005751
+WhatsApp Image 2026-10-02 at 13.51.17_new_roi.png	19.765022
+WhatsApp Image 2026-10-02 at 13.51.18 (1)_new_roi.png	16.930796
+WhatsApp Image 2026-10-02 at 13.51.18 (2)_new_roi.png	17.875120
+WhatsApp Image 2026-10-02 at 13.51.18 (3)_new_roi.png	18.390690
+WhatsApp Image 2026-10-02 at 13.51.18_new_roi.png	22.875780
+WhatsApp Image 2026-10-02 at 13.51.19_new_roi.png	16.646669

@@ -1,0 +1,243 @@
+{
+  "seed": 42,
+  "holdout_ratio": 0.3,
+  "dataset": {
+    "total": 44,
+    "normal": 21,
+    "defect": 23
+  },
+  "split": {
+    "training": 31,
+    "holdout": 13,
+    "training_normal": 15,
+    "training_defect": 16,
+    "holdout_normal": 6,
+    "holdout_defect": 7
+  },
+  "features": [
+    "score",
+    "central_fraction",
+    "border_fraction",
+    "centroid_distance",
+    "largest_region_fraction",
+    "anomaly_mass"
+  ],
+  "decision_layer": {
+    "model": "StandardScaler + LogisticRegression",
+    "training_metrics": {
+      "accuracy": 0.9354838709677419,
+      "precision": 0.9375,
+      "recall": 0.9375,
+      "f1": 0.9375,
+      "true_negatives": 14,
+      "false_positives": 1,
+      "false_negatives": 1,
+      "true_positives": 15,
+      "normal_false_rejects": 1,
+      "defect_misses": 1,
+      "normal_total": 15,
+      "defect_total": 16,
+      "false_reject_rate": 0.06666666666666667,
+      "defect_detection_rate": 0.9375,
+      "defect_miss_rate": 0.0625,
+      "probability_min": 0.04492856562137604,
+      "probability_max": 0.979097306728363
+    },
+    "holdout_metrics": {
+      "accuracy": 0.9230769230769231,
+      "precision": 0.875,
+      "recall": 1.0,
+      "f1": 0.9333333333333333,
+      "true_negatives": 5,
+      "false_positives": 1,
+      "false_negatives": 0,
+      "true_positives": 7,
+      "normal_false_rejects": 1,
+      "defect_misses": 0,
+      "normal_total": 6,
+      "defect_total": 7,
+      "false_reject_rate": 0.16666666666666666,
+      "defect_detection_rate": 1.0,
+      "defect_miss_rate": 0.0,
+      "probability_min": 0.04544738307595253,
+      "probability_max": 0.9840956926345825
+    },
+    "coefficients": {
+      "score": 0.8006178140640259,
+      "central_fraction": 0.5228099226951599,
+      "border_fraction": -0.5228099226951599,
+      "centroid_distance": -0.12137162685394287,
+      "largest_region_fraction": -0.38776904344558716,
+      "anomaly_mass": -1.1015831232070923
+    }
+  },
+  "patchcore_baseline": {
+    "threshold": 17.47629165649414,
+    "test_accuracy": 0.6153846153846154,
+    "test_false_reject_rate": 0.0,
+    "test_defect_detection_rate": 0.2857142857142857,
+    "test_defect_miss_rate": 0.7142857142857143,
+    "test_normal_rejects": 0,
+    "test_normal_total": 6,
+    "test_defects_detected": 2,
+    "test_defect_total": 7
+  },
+  "holdout_predictions": [
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.11_new_roi.png",
+      "actual": "defect",
+      "predicted": "defect",
+      "defect_probability": 0.8709310293197632,
+      "score": 17.778568267822266,
+      "central_fraction": 0.5340250228867867,
+      "border_fraction": 0.4659749771132133,
+      "centroid_distance": 0.27813117103796836,
+      "largest_region_fraction": 0.8931949954226427,
+      "anomaly_mass": 0.41557085514068604
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.44.29_new_roi.png",
+      "actual": "normal",
+      "predicted": "normal",
+      "defect_probability": 0.1492602825164795,
+      "score": 11.060256004333496,
+      "central_fraction": 0.2657918828196521,
+      "border_fraction": 0.7342081171803478,
+      "centroid_distance": 0.20365272416281338,
+      "largest_region_fraction": 0.28166005492828805,
+      "anomaly_mass": 0.5571241974830627
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.15 (2)_new_roi.png",
+      "actual": "defect",
+      "predicted": "defect",
+      "defect_probability": 0.8392226099967957,
+      "score": 14.986225128173828,
+      "central_fraction": 0.8889227952395483,
+      "border_fraction": 0.11107720476045163,
+      "centroid_distance": 0.1183567903135923,
+      "largest_region_fraction": 0.4751296917912725,
+      "anomaly_mass": 0.5226134061813354
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.44.22_new_roi.png",
+      "actual": "normal",
+      "predicted": "normal",
+      "defect_probability": 0.10248814523220062,
+      "score": 10.154657363891602,
+      "central_fraction": 0.2050656087885261,
+      "border_fraction": 0.7949343912114739,
+      "centroid_distance": 0.06010140190678588,
+      "largest_region_fraction": 0.1821788220933781,
+      "anomaly_mass": 0.5828471183776855
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.44.53_new_roi.png",
+      "actual": "normal",
+      "predicted": "normal",
+      "defect_probability": 0.04544738307595253,
+      "score": 9.974906921386719,
+      "central_fraction": 0.041806530363137015,
+      "border_fraction": 0.958193469636863,
+      "centroid_distance": 0.1632388881452116,
+      "largest_region_fraction": 0.3051571559353067,
+      "anomaly_mass": 0.5818784236907959
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.08_new_roi.png",
+      "actual": "defect",
+      "predicted": "defect",
+      "defect_probability": 0.9721595048904419,
+      "score": 15.87137222290039,
+      "central_fraction": 0.5648458956362526,
+      "border_fraction": 0.43515410436374735,
+      "centroid_distance": 0.15420633822401283,
+      "largest_region_fraction": 0.5392126945376869,
+      "anomaly_mass": 0.30489635467529297
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.15_new_roi.png",
+      "actual": "defect",
+      "predicted": "defect",
+      "defect_probability": 0.9840956926345825,
+      "score": 19.549856185913086,
+      "central_fraction": 0.8873970094598719,
+      "border_fraction": 0.11260299054012816,
+      "centroid_distance": 0.2572445074924062,
+      "largest_region_fraction": 1.0,
+      "anomaly_mass": 0.3602703809738159
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.44.21_new_roi.png",
+      "actual": "normal",
+      "predicted": "defect",
+      "defect_probability": 0.7337020635604858,
+      "score": 13.934226989746094,
+      "central_fraction": 0.637778455904791,
+      "border_fraction": 0.362221544095209,
+      "centroid_distance": 0.057780403361867884,
+      "largest_region_fraction": 0.4681110772047605,
+      "anomaly_mass": 0.4954404830932617
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.17 (2)_new_roi.png",
+      "actual": "defect",
+      "predicted": "defect",
+      "defect_probability": 0.8382163047790527,
+      "score": 17.060604095458984,
+      "central_fraction": 0.3567287152883735,
+      "border_fraction": 0.6432712847116265,
+      "centroid_distance": 0.15918635384553406,
+      "largest_region_fraction": 0.6838571864510222,
+      "anomaly_mass": 0.4129893481731415
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.18 (2)_new_roi.png",
+      "actual": "defect",
+      "predicted": "defect",
+      "defect_probability": 0.8468359708786011,
+      "score": 15.184597969055176,
+      "central_fraction": 0.5148001220628624,
+      "border_fraction": 0.48519987793713765,
+      "centroid_distance": 0.18433616276240428,
+      "largest_region_fraction": 0.6322856270979554,
+      "anomaly_mass": 0.4070906639099121
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.44.45_new_roi.png",
+      "actual": "normal",
+      "predicted": "normal",
+      "defect_probability": 0.08130862563848495,
+      "score": 9.988798141479492,
+      "central_fraction": 0.3295697284101312,
+      "border_fraction": 0.6704302715898688,
+      "centroid_distance": 0.11668805861197312,
+      "largest_region_fraction": 0.2056759231003967,
+      "anomaly_mass": 0.6201235055923462
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.44.43_new_roi.png",
+      "actual": "normal",
+      "predicted": "normal",
+      "defect_probability": 0.07809635996818542,
+      "score": 10.05899715423584,
+      "central_fraction": 0.1324382056759231,
+      "border_fraction": 0.8675617943240769,
+      "centroid_distance": 0.22178705878451907,
+      "largest_region_fraction": 0.362221544095209,
+      "anomaly_mass": 0.5481855869293213
+    },
+    {
+      "filename": "WhatsApp Image 2026-10-02 at 13.51.17 (3)_new_roi.png",
+      "actual": "defect",
+      "predicted": "defect",
+      "defect_probability": 0.9307606816291809,
+      "score": 16.08759880065918,
+      "central_fraction": 0.7662496185535551,
+      "border_fraction": 0.23375038144644492,
+      "centroid_distance": 0.257763930976832,
+      "largest_region_fraction": 0.8928898382667073,
+      "anomaly_mass": 0.3833184540271759
+    }
+  ]
+}

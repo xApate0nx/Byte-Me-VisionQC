@@ -1,0 +1,705 @@
+{
+  "model": "PatchCore v3",
+  "normal": {
+    "summary": {
+      "count": 21,
+      "mean_max_value": 10.422424725123815,
+      "mean_central_high_fraction": 0.25896217504395713,
+      "mean_border_high_fraction": 0.7410378249560429,
+      "max_region_counts": {
+        "TOP_LEFT": 1,
+        "TOP_CENTER": 3,
+        "TOP_RIGHT": 3,
+        "MIDDLE_LEFT": 1,
+        "CENTER": 1,
+        "MIDDLE_RIGHT": 3,
+        "BOTTOM_LEFT": 4,
+        "BOTTOM_CENTER": 4,
+        "BOTTOM_RIGHT": 1
+      }
+    },
+    "images": [
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.44.15_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 9.547379493713379,
+        "max_y": 13,
+        "max_x": 184,
+        "max_region": "TOP_RIGHT",
+        "p95": 8.431499481201172,
+        "central_high_fraction": 0.039060115959719255,
+        "border_high_fraction": 0.9609398840402807,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.44.17_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 9.883709907531738,
+        "max_y": 255,
+        "max_x": 133,
+        "max_region": "BOTTOM_CENTER",
+        "p95": 8.379426956176758,
+        "central_high_fraction": 0.04302715898687824,
+        "border_high_fraction": 0.9569728410131217,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.44.19_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 9.934426307678223,
+        "max_y": 255,
+        "max_x": 124,
+        "max_region": "BOTTOM_CENTER",
+        "p95": 8.354055404663086,
+        "central_high_fraction": 0.04424778761061947,
+        "border_high_fraction": 0.9557522123893806,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.44.20_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 9.972265243530273,
+        "max_y": 223,
+        "max_x": 0,
+        "max_region": "BOTTOM_LEFT",
+        "p95": 8.368850708007812,
+        "central_high_fraction": 0.036313701556301495,
+        "border_high_fraction": 0.9636862984436985,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.44.21_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 13.76639461517334,
+        "max_y": 132,
+        "max_x": 46,
+        "max_region": "MIDDLE_LEFT",
+        "p95": 12.55198860168457,
+        "central_high_fraction": 0.637778455904791,
+        "border_high_fraction": 0.362221544095209,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.44.22_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 9.26786994934082,
+        "max_y": 176,
+        "max_x": 67,
+        "max_region": "BOTTOM_LEFT",
+        "p95": 7.954794406890869,
+        "central_high_fraction": 0.2050656087885261,
+        "border_high_fraction": 0.7949343912114739,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.44.23_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 9.230448722839355,
+        "max_y": 86,
+        "max_x": 141,
+        "max_region": "CENTER",
+        "p95": 8.274313926696777,
+        "central_high_fraction": 0.5001525785779677,
+        "border_high_fraction": 0.49984742142203237,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.44.24_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 9.357895851135254,
+        "max_y": 219,
+        "max_x": 206,
+        "max_region": "BOTTOM_RIGHT",
+        "p95": 8.478109359741211,
+        "central_high_fraction": 0.3738175160207507,
+        "border_high_fraction": 0.6261824839792494,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.44.26_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 9.655782699584961,
+        "max_y": 185,
+        "max_x": 14,
+        "max_region": "BOTTOM_LEFT",
+        "p95": 8.28674602508545,
+        "central_high_fraction": 0.4211168751907232,
+        "border_high_fraction": 0.5788831248092767,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.44.29_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 9.694120407104492,
+        "max_y": 28,
+        "max_x": 109,
+        "max_region": "TOP_CENTER",
+        "p95": 8.329021453857422,
+        "central_high_fraction": 0.2657918828196521,
+        "border_high_fraction": 0.7342081171803478,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.44.35_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 13.515278816223145,
+        "max_y": 203,
+        "max_x": 116,
+        "max_region": "BOTTOM_CENTER",
+        "p95": 11.419336318969727,
+        "central_high_fraction": 0.4864205065608789,
+        "border_high_fraction": 0.5135794934391211,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.44.37_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 9.260570526123047,
+        "max_y": 11,
+        "max_x": 185,
+        "max_region": "TOP_RIGHT",
+        "p95": 8.39260196685791,
+        "central_high_fraction": 0.4018919743667989,
+        "border_high_fraction": 0.5981080256332011,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.44.38_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 9.42855453491211,
+        "max_y": 255,
+        "max_x": 122,
+        "max_region": "BOTTOM_CENTER",
+        "p95": 8.282222747802734,
+        "central_high_fraction": 0.2645712541959109,
+        "border_high_fraction": 0.7354287458040891,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.44.43_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 9.82172679901123,
+        "max_y": 57,
+        "max_x": 255,
+        "max_region": "TOP_RIGHT",
+        "p95": 8.351067543029785,
+        "central_high_fraction": 0.1324382056759231,
+        "border_high_fraction": 0.8675617943240769,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.44.45_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 9.335902214050293,
+        "max_y": 195,
+        "max_x": 85,
+        "max_region": "BOTTOM_LEFT",
+        "p95": 8.505379676818848,
+        "central_high_fraction": 0.3295697284101312,
+        "border_high_fraction": 0.6704302715898688,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.44.47_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 9.308014869689941,
+        "max_y": 130,
+        "max_x": 255,
+        "max_region": "MIDDLE_RIGHT",
+        "p95": 8.368400573730469,
+        "central_high_fraction": 0.18492523649679585,
+        "border_high_fraction": 0.8150747635032042,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.44.48_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 16.584209442138672,
+        "max_y": 71,
+        "max_x": 68,
+        "max_region": "TOP_LEFT",
+        "p95": 13.365137100219727,
+        "central_high_fraction": 0.7043027158986879,
+        "border_high_fraction": 0.2956972841013122,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.44.50_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 9.446087837219238,
+        "max_y": 155,
+        "max_x": 255,
+        "max_region": "MIDDLE_RIGHT",
+        "p95": 8.358906745910645,
+        "central_high_fraction": 0.06621910283796155,
+        "border_high_fraction": 0.9337808971620385,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.44.52_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 9.780041694641113,
+        "max_y": 0,
+        "max_x": 142,
+        "max_region": "TOP_CENTER",
+        "p95": 8.459197998046875,
+        "central_high_fraction": 0.06225205981080256,
+        "border_high_fraction": 0.9377479401891974,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.44.53_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 9.594388961791992,
+        "max_y": 0,
+        "max_x": 146,
+        "max_region": "TOP_CENTER",
+        "p95": 8.48634147644043,
+        "central_high_fraction": 0.041806530363137015,
+        "border_high_fraction": 0.958193469636863,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "wsp_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 12.48585033416748,
+        "max_y": 167,
+        "max_x": 221,
+        "max_region": "MIDDLE_RIGHT",
+        "p95": 10.855834007263184,
+        "central_high_fraction": 0.19743667989014344,
+        "border_high_fraction": 0.8025633201098565,
+        "high_pixel_count": 3277
+      }
+    ]
+  },
+  "defects": {
+    "summary": {
+      "count": 23,
+      "mean_max_value": 15.188658175261125,
+      "mean_central_high_fraction": 0.6958246540446591,
+      "mean_border_high_fraction": 0.3041753459553409,
+      "max_region_counts": {
+        "TOP_LEFT": 0,
+        "TOP_CENTER": 0,
+        "TOP_RIGHT": 0,
+        "MIDDLE_LEFT": 2,
+        "CENTER": 7,
+        "MIDDLE_RIGHT": 3,
+        "BOTTOM_LEFT": 2,
+        "BOTTOM_CENTER": 7,
+        "BOTTOM_RIGHT": 2
+      }
+    },
+    "images": [
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.51.07_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 12.424956321716309,
+        "max_y": 189,
+        "max_x": 181,
+        "max_region": "BOTTOM_RIGHT",
+        "p95": 10.68429183959961,
+        "central_high_fraction": 0.6026853829722307,
+        "border_high_fraction": 0.3973146170277693,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.51.08_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 15.527565956115723,
+        "max_y": 147,
+        "max_x": 119,
+        "max_region": "CENTER",
+        "p95": 11.65479564666748,
+        "central_high_fraction": 0.5648458956362526,
+        "border_high_fraction": 0.43515410436374735,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.51.10_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 13.658737182617188,
+        "max_y": 134,
+        "max_x": 93,
+        "max_region": "CENTER",
+        "p95": 10.94560718536377,
+        "central_high_fraction": 0.7815074763503204,
+        "border_high_fraction": 0.21849252364967958,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.51.11_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 17.300127029418945,
+        "max_y": 201,
+        "max_x": 87,
+        "max_region": "BOTTOM_CENTER",
+        "p95": 14.5362548828125,
+        "central_high_fraction": 0.5340250228867867,
+        "border_high_fraction": 0.4659749771132133,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.51.12 (1)_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 16.073667526245117,
+        "max_y": 100,
+        "max_x": 94,
+        "max_region": "CENTER",
+        "p95": 13.485971450805664,
+        "central_high_fraction": 0.7668599328654256,
+        "border_high_fraction": 0.2331400671345743,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.51.12_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 16.867107391357422,
+        "max_y": 210,
+        "max_x": 140,
+        "max_region": "BOTTOM_CENTER",
+        "p95": 14.796218872070312,
+        "central_high_fraction": 0.7076594446139762,
+        "border_high_fraction": 0.2923405553860238,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.51.13_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 15.233039855957031,
+        "max_y": 225,
+        "max_x": 28,
+        "max_region": "BOTTOM_LEFT",
+        "p95": 13.443087577819824,
+        "central_high_fraction": 0.7720476045163259,
+        "border_high_fraction": 0.2279523954836741,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.51.14_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 19.06475257873535,
+        "max_y": 165,
+        "max_x": 189,
+        "max_region": "MIDDLE_RIGHT",
+        "p95": 15.742195129394531,
+        "central_high_fraction": 0.8877021666158071,
+        "border_high_fraction": 0.11229783338419286,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.51.15 (1)_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 14.476236343383789,
+        "max_y": 186,
+        "max_x": 159,
+        "max_region": "BOTTOM_CENTER",
+        "p95": 13.188923835754395,
+        "central_high_fraction": 0.9337808971620385,
+        "border_high_fraction": 0.06621910283796155,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.51.15 (2)_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 14.419578552246094,
+        "max_y": 164,
+        "max_x": 68,
+        "max_region": "MIDDLE_LEFT",
+        "p95": 13.20309829711914,
+        "central_high_fraction": 0.8889227952395483,
+        "border_high_fraction": 0.11107720476045163,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.51.15_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 19.224979400634766,
+        "max_y": 165,
+        "max_x": 188,
+        "max_region": "MIDDLE_RIGHT",
+        "p95": 15.595751762390137,
+        "central_high_fraction": 0.8873970094598719,
+        "border_high_fraction": 0.11260299054012816,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.51.16 (1)_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 14.303289413452148,
+        "max_y": 87,
+        "max_x": 139,
+        "max_region": "CENTER",
+        "p95": 12.708263397216797,
+        "central_high_fraction": 0.8834299664327129,
+        "border_high_fraction": 0.11657003356728715,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.51.16 (2)_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 13.634108543395996,
+        "max_y": 113,
+        "max_x": 138,
+        "max_region": "CENTER",
+        "p95": 12.006481170654297,
+        "central_high_fraction": 1.0,
+        "border_high_fraction": 0.0,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.51.16_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 16.100067138671875,
+        "max_y": 167,
+        "max_x": 101,
+        "max_region": "CENTER",
+        "p95": 13.947750091552734,
+        "central_high_fraction": 0.9801647848642051,
+        "border_high_fraction": 0.019835215135794934,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.51.17 (1)_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 15.705901145935059,
+        "max_y": 185,
+        "max_x": 180,
+        "max_region": "BOTTOM_RIGHT",
+        "p95": 13.32365894317627,
+        "central_high_fraction": 0.9435459261519683,
+        "border_high_fraction": 0.056454073848031736,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.51.17 (2)_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 16.243608474731445,
+        "max_y": 185,
+        "max_x": 60,
+        "max_region": "BOTTOM_LEFT",
+        "p95": 13.315186500549316,
+        "central_high_fraction": 0.3567287152883735,
+        "border_high_fraction": 0.6432712847116265,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.51.17 (3)_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 15.36909008026123,
+        "max_y": 183,
+        "max_x": 170,
+        "max_region": "BOTTOM_CENTER",
+        "p95": 12.364566802978516,
+        "central_high_fraction": 0.7662496185535551,
+        "border_high_fraction": 0.23375038144644492,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.51.17_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 13.769584655761719,
+        "max_y": 152,
+        "max_x": 108,
+        "max_region": "CENTER",
+        "p95": 12.051156997680664,
+        "central_high_fraction": 1.0,
+        "border_high_fraction": 0.0,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.51.18 (1)_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 14.203229904174805,
+        "max_y": 138,
+        "max_x": 56,
+        "max_region": "MIDDLE_LEFT",
+        "p95": 11.728836059570312,
+        "central_high_fraction": 0.4662801342691486,
+        "border_high_fraction": 0.5337198657308514,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.51.18 (2)_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 14.789015769958496,
+        "max_y": 136,
+        "max_x": 205,
+        "max_region": "MIDDLE_RIGHT",
+        "p95": 12.24848747253418,
+        "central_high_fraction": 0.5148001220628624,
+        "border_high_fraction": 0.48519987793713765,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.51.18 (3)_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 13.128786087036133,
+        "max_y": 208,
+        "max_x": 106,
+        "max_region": "BOTTOM_CENTER",
+        "p95": 11.172125816345215,
+        "central_high_fraction": 0.3918217882209338,
+        "border_high_fraction": 0.6081782117790662,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.51.18_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 13.971301078796387,
+        "max_y": 218,
+        "max_x": 122,
+        "max_region": "BOTTOM_CENTER",
+        "p95": 11.50486946105957,
+        "central_high_fraction": 0.1592920353982301,
+        "border_high_fraction": 0.8407079646017699,
+        "high_pixel_count": 3277
+      },
+      {
+        "filename": "WhatsApp Image 2026-10-02 at 13.51.19_new_roi_anomaly_map",
+        "shape": [
+          256,
+          256
+        ],
+        "max_value": 13.850407600402832,
+        "max_y": 204,
+        "max_x": 96,
+        "max_region": "BOTTOM_CENTER",
+        "p95": 10.782020568847656,
+        "central_high_fraction": 0.2142203234665853,
+        "border_high_fraction": 0.7857796765334147,
+        "high_pixel_count": 3277
+      }
+    ]
+  }
+}

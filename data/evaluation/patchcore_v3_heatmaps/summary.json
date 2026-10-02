@@ -1,0 +1,7 @@
+{
+  "model": "PatchCore v3",
+  "model_version": "patchcore_water_cap_v3",
+  "normal_count": 21,
+  "defect_count": 23,
+  "output_root": "C:\\Users\\Ruthvik\\OneDrive\\Desktop\\visionqc\\data\\evaluation\\patchcore_v3_heatmaps"
+}
