@@ -1,174 +1,166 @@
-from pathlib import Path
+from __future__ import annotations
+
 import numpy as np
-import cv2
 
 
-def extract_spatial_features(heatmap):
+def extract_spatial_features(heatmap: np.ndarray) -> dict[str, float]:
     """
-    Extract spatial characteristics from a PatchCore anomaly map.
+    Extract spatial characteristics from a PatchCore anomaly heatmap.
 
-    Returns normalized, model-independent features.
+    Accepts:
+        (H, W)
+        (1, H, W)
+        (H, W, 1)
+
+    Returns normalized spatial features.
     """
 
     heatmap = np.asarray(heatmap, dtype=np.float32)
 
+    # Normalize common PatchCore output shapes to 2D.
+    if heatmap.ndim == 3:
+        if heatmap.shape[0] == 1:
+            heatmap = heatmap[0]
+        elif heatmap.shape[-1] == 1:
+            heatmap = heatmap[..., 0]
+        else:
+            raise ValueError(
+                f"Expected single-channel heatmap, got {heatmap.shape}"
+            )
+
     if heatmap.ndim != 2:
         raise ValueError(f"Expected 2D heatmap, got {heatmap.shape}")
 
+    if not np.all(np.isfinite(heatmap)):
+        heatmap = np.nan_to_num(
+            heatmap,
+            nan=0.0,
+            posinf=0.0,
+            neginf=0.0,
+        )
+
     h, w = heatmap.shape
 
-    # ------------------------------------------------------------
-    # Normalize anomaly map to 0..1
-    # ------------------------------------------------------------
+    if h == 0 or w == 0:
+        raise ValueError(f"Invalid heatmap shape: {heatmap.shape}")
 
-    minimum = float(np.min(heatmap))
-    maximum = float(np.max(heatmap))
+    # ---------------------------------------------------------
+    # Top 5% anomaly mask
+    # ---------------------------------------------------------
+    percentile = np.percentile(heatmap, 95.0)
 
-    if maximum > minimum:
-        normalized = (heatmap - minimum) / (maximum - minimum)
-    else:
-        normalized = np.zeros_like(heatmap)
+    mask = heatmap >= percentile
 
-    # ------------------------------------------------------------
-    # Top 5% anomaly region
-    # ------------------------------------------------------------
+    # ---------------------------------------------------------
+    # Coordinate grids
+    # ---------------------------------------------------------
+    yy, xx = np.mgrid[0:h, 0:w]
 
-    p95 = np.percentile(heatmap, 95)
-    high_mask = (heatmap >= p95).astype(np.uint8)
+    cx = (w - 1) / 2.0
+    cy = (h - 1) / 2.0
 
-    high_pixels = int(np.sum(high_mask))
-
-    if high_pixels == 0:
-        return {
-            "central_anomaly_fraction": 0.0,
-            "border_anomaly_fraction": 0.0,
-            "anomaly_centroid_x": 0.5,
-            "anomaly_centroid_y": 0.5,
-            "centroid_distance": 0.0,
-            "largest_region_fraction": 0.0,
-            "anomaly_compactness": 0.0,
-            "anomaly_mass": 0.0,
-        }
-
-    ys, xs = np.where(high_mask > 0)
-
-    # ------------------------------------------------------------
+    # ---------------------------------------------------------
     # Central anomaly fraction
-    # ------------------------------------------------------------
+    # Within 30% of image center.
+    # ---------------------------------------------------------
+    dx = (xx - cx) / max(w / 2.0, 1.0)
+    dy = (yy - cy) / max(h / 2.0, 1.0)
 
-    cx = w / 2.0
-    cy = h / 2.0
+    radial_distance = np.sqrt(dx ** 2 + dy ** 2)
 
-    central_mask = (
-        (np.abs(xs - cx) <= 0.30 * w)
-        & (np.abs(ys - cy) <= 0.30 * h)
-    )
+    central_mask = radial_distance <= 0.30
 
-    central_fraction = float(np.mean(central_mask))
-
-    # ------------------------------------------------------------
+    # ---------------------------------------------------------
     # Border anomaly fraction
-    # ------------------------------------------------------------
-
+    # Outside the central 60% region.
+    # ---------------------------------------------------------
     border_mask = (
-        (xs < 0.20 * w)
-        | (xs >= 0.80 * w)
-        | (ys < 0.20 * h)
-        | (ys >= 0.80 * h)
+        (xx < 0.20 * w)
+        | (xx >= 0.80 * w)
+        | (yy < 0.20 * h)
+        | (yy >= 0.80 * h)
     )
 
-    border_fraction = float(np.mean(border_mask))
+    total_anomaly_pixels = max(int(mask.sum()), 1)
 
-    # ------------------------------------------------------------
-    # Anomaly centroid
-    # ------------------------------------------------------------
+    central_anomaly_fraction = float(
+        np.logical_and(mask, central_mask).sum()
+        / total_anomaly_pixels
+    )
 
-    centroid_x = float(np.mean(xs) / w)
-    centroid_y = float(np.mean(ys) / h)
+    border_anomaly_fraction = float(
+        np.logical_and(mask, border_mask).sum()
+        / total_anomaly_pixels
+    )
 
-    centroid_distance = float(
-        np.sqrt(
-            (centroid_x - 0.5) ** 2
-            + (centroid_y - 0.5) ** 2
+    # ---------------------------------------------------------
+    # Weighted anomaly centroid
+    # ---------------------------------------------------------
+    positive_heatmap = np.maximum(heatmap, 0.0)
+    mass = float(positive_heatmap.sum())
+
+    if mass > 0:
+        centroid_x = float((xx * positive_heatmap).sum() / mass)
+        centroid_y = float((yy * positive_heatmap).sum() / mass)
+
+        normalized_cx = (centroid_x - cx) / max(w / 2.0, 1.0)
+        normalized_cy = (centroid_y - cy) / max(h / 2.0, 1.0)
+
+        centroid_distance = float(
+            np.sqrt(normalized_cx ** 2 + normalized_cy ** 2)
         )
-    )
-
-    # ------------------------------------------------------------
-    # Connected components
-    # ------------------------------------------------------------
-
-    num_labels, labels, stats, _ = cv2.connectedComponentsWithStats(
-        high_mask,
-        connectivity=8,
-    )
-
-    component_sizes = stats[1:, cv2.CC_STAT_AREA]
-
-    if len(component_sizes) > 0:
-        largest_component = int(np.max(component_sizes))
     else:
-        largest_component = 0
+        centroid_x = cx
+        centroid_y = cy
+        centroid_distance = 0.0
 
-    largest_region_fraction = (
-        largest_component / high_pixels
-    )
+    # ---------------------------------------------------------
+    # Largest connected-ish anomaly region approximation
+    # ---------------------------------------------------------
+    # Use connected components if OpenCV is available.
+    largest_region_fraction = 0.0
 
-    # ------------------------------------------------------------
+    try:
+        import cv2
+
+        binary = mask.astype(np.uint8)
+
+        num_labels, _, stats, _ = cv2.connectedComponentsWithStats(
+            binary,
+            connectivity=8,
+        )
+
+        if num_labels > 1:
+            region_sizes = stats[1:, cv2.CC_STAT_AREA]
+
+            if len(region_sizes):
+                largest_region = float(np.max(region_sizes))
+                largest_region_fraction = (
+                    largest_region / total_anomaly_pixels
+                )
+
+    except Exception:
+        # Safe fallback if OpenCV component analysis fails.
+        largest_region_fraction = 0.0
+
+    # ---------------------------------------------------------
     # Compactness
-    # ------------------------------------------------------------
+    # ---------------------------------------------------------
+    anomaly_compactness = largest_region_fraction
 
-    # A concentrated anomaly occupies fewer pixels.
-    # A scattered anomaly produces many disconnected pixels.
-    compactness = float(largest_region_fraction)
-
-    # ------------------------------------------------------------
-    # Weighted anomaly mass
-    # ------------------------------------------------------------
-
-    anomaly_mass = float(np.mean(normalized))
+    # ---------------------------------------------------------
+    # Overall anomaly mass
+    # Normalize by image size.
+    # ---------------------------------------------------------
+    anomaly_mass = float(positive_heatmap.mean())
 
     return {
-        "central_anomaly_fraction": central_fraction,
-        "border_anomaly_fraction": border_fraction,
-        "anomaly_centroid_x": centroid_x,
-        "anomaly_centroid_y": centroid_y,
+        "central_anomaly_fraction": central_anomaly_fraction,
+        "border_anomaly_fraction": border_anomaly_fraction,
+        "anomaly_centroid_x": float(centroid_x / max(w, 1)),
+        "anomaly_centroid_y": float(centroid_y / max(h, 1)),
         "centroid_distance": centroid_distance,
         "largest_region_fraction": largest_region_fraction,
-        "anomaly_compactness": compactness,
+        "anomaly_compactness": anomaly_compactness,
         "anomaly_mass": anomaly_mass,
     }
-
-
-def extract_from_file(path):
-    heatmap = np.load(path)
-    return extract_spatial_features(heatmap)
-
-
-if __name__ == "__main__":
-    PROJECT_ROOT = Path(__file__).resolve().parent.parent
-
-    HEATMAP_ROOT = (
-        PROJECT_ROOT
-        / "data"
-        / "evaluation"
-        / "patchcore_v3_heatmaps"
-    )
-
-    for category in ["normal", "defects"]:
-
-        directory = HEATMAP_ROOT / category
-
-        print()
-        print("=" * 70)
-        print(category.upper())
-        print("=" * 70)
-
-        for path in sorted(directory.glob("*.npy")):
-
-            features = extract_from_file(path)
-
-            print()
-            print(path.name)
-
-            for key, value in features.items():
-                print(f"  {key:30} {value:.4f}")

@@ -1,19 +1,24 @@
-from pathlib import Path
-import sys
-import json
-from datetime import datetime
+from __future__ import annotations
 
+import json
+import sys
+from datetime import datetime
+from pathlib import Path
+
+import cv2
 import numpy as np
 
 from anomalib.data import PredictDataset
 from anomalib.engine import Engine
 from anomalib.models import Patchcore
 
-from decision_engine import VisionQCDecisionEngine
+from product_detector import detect_product
+from cap_roi import extract_canonical_roi
+from spatial_features import extract_spatial_features
 
 
 # ============================================================
-# PROJECT PATHS
+# VISIONQC - PRODUCTION PATCHCORE INSPECTION
 # ============================================================
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -21,38 +26,193 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 CHECKPOINT = (
     PROJECT_ROOT
     / "models"
-    / "patchcore_water_cap_v2"
+    / "patchcore_water_cap_v4"
     / "Patchcore"
-    / "water_cap_v1_roi80"
+    / "water_cap_v1_final_validation"
     / "v0"
     / "weights"
     / "lightning"
     / "model.ckpt"
 )
 
-INSPECTION_DIR = PROJECT_ROOT / "data" / "inspections"
+OUTPUT_DIR = PROJECT_ROOT / "data" / "inspections"
 
-THRESHOLD = 12.3785223961
+ROI_SIZE = 224
+
+# Configurable operating threshold.
+# This is NOT claimed to be a scientifically final threshold.
+DEFAULT_THRESHOLD = 14.0
+
+REVIEW_MARGIN = 1.0
 
 
 # ============================================================
-# PATCHCORE INFERENCE
+# IMAGE HELPERS
 # ============================================================
 
-def run_patchcore(image_path: Path):
+def load_image(path: Path) -> np.ndarray:
+    image = cv2.imread(str(path))
 
-    print("\nLoading PatchCore v2...")
+    if image is None:
+        raise ValueError(f"Could not read image: {path}")
+
+    return image
+
+
+def save_heatmap(
+    anomaly_map: np.ndarray,
+    output_path: Path,
+) -> None:
+    anomaly_map = np.asarray(
+        anomaly_map,
+        dtype=np.float32,
+    )
+
+    anomaly_map = np.squeeze(anomaly_map)
+    anomaly_map = np.nan_to_num(anomaly_map)
+
+    if anomaly_map.ndim != 2:
+        raise ValueError(
+            f"Expected 2D anomaly map, got shape {anomaly_map.shape}"
+        )
+
+    minimum = float(anomaly_map.min())
+    maximum = float(anomaly_map.max())
+
+    if maximum > minimum:
+        normalized = (
+            anomaly_map - minimum
+        ) / (
+            maximum - minimum
+        )
+    else:
+        normalized = np.zeros_like(anomaly_map)
+
+    normalized = (
+        normalized * 255
+    ).astype(np.uint8)
+
+    heatmap = cv2.applyColorMap(
+        normalized,
+        cv2.COLORMAP_JET,
+    )
+
+    cv2.imwrite(
+        str(output_path),
+        heatmap,
+    )
+
+
+# ============================================================
+# DECISION
+# ============================================================
+
+def decide(
+    score: float,
+    threshold: float,
+    spatial: dict,
+) -> str:
+    """
+    Current operating decision layer.
+
+    PASS:
+        score clearly below threshold.
+
+    REVIEW:
+        score is close to threshold or spatial evidence
+        is unusually concentrated in the product center.
+
+    FAIL:
+        score reaches/exceeds threshold.
+
+    This is an operating rule for the prototype, not a
+    calibrated defect probability.
+    """
+
+    central = float(
+        spatial.get(
+            "central_anomaly_fraction",
+            spatial.get("central", 0.0),
+        )
+    )
+
+    if score >= threshold:
+        return "FAIL"
+
+    if score >= threshold - REVIEW_MARGIN:
+        return "REVIEW"
+
+    if central >= 0.80:
+        return "REVIEW"
+
+    return "PASS"
+
+
+# ============================================================
+# PATCHCORE
+# ============================================================
+
+def load_model() -> Patchcore:
+    if not CHECKPOINT.exists():
+        raise FileNotFoundError(
+            f"V4 checkpoint not found:\n{CHECKPOINT}"
+        )
 
     model = Patchcore(
         backbone="resnet18",
-        layers=["layer2", "layer3"],
-        pre_trained=True,
+        layers=[
+            "layer2",
+            "layer3",
+        ],
+        pre_trained=False,
         num_neighbors=9,
     )
 
-    # IMPORTANT:
-    # Disable Anomalib post-processing so that we receive
-    # the actual PatchCore anomaly distance.
+    return model
+
+
+def find_prediction_value(
+    prediction,
+    names: list[str],
+):
+    for name in names:
+        if hasattr(prediction, name):
+            value = getattr(
+                prediction,
+                name,
+            )
+
+            if value is not None:
+                return value
+
+    return None
+
+
+def run_patchcore(roi_path: Path, model: Patchcore):
+    import torch
+
+    # V4 uses explicit checkpoint loading into the PatchCore model.
+    # This preserves the trained PatchCore memory bank.
+    checkpoint_data = torch.load(
+        CHECKPOINT,
+        map_location="cpu",
+        weights_only=False,
+    )
+
+    state_dict = checkpoint_data.get(
+        "state_dict",
+        checkpoint_data,
+    )
+
+    model.load_state_dict(
+        state_dict,
+        strict=False,
+    )
+
+    model.eval()
+
+    # Match V4 validation: return the raw PatchCore distance
+    # instead of Anomalib's automatic post-processing.
     model.post_processor = None
 
     engine = Engine(
@@ -60,340 +220,366 @@ def run_patchcore(image_path: Path):
         devices=1,
     )
 
-    dataset = PredictDataset(
-        path=str(image_path),
-        image_size=(256, 256),
-    )
-
-    print("Running PatchCore inference...")
-
     predictions = engine.predict(
         model=model,
-        dataset=dataset,
-        ckpt_path=str(CHECKPOINT),
+        data_path=str(roi_path),
     )
 
     if not predictions:
-        raise RuntimeError(
-            "PatchCore returned no predictions."
-        )
+        raise RuntimeError("PatchCore returned no prediction.")
 
     prediction = predictions[0]
 
-    anomaly_score = prediction.pred_score
+    score = find_prediction_value(
+        prediction,
+        ["anomaly_score", "pred_score"],
+    )
 
-    if hasattr(anomaly_score, "item"):
-        anomaly_score = anomaly_score.item()
+    anomaly_map = find_prediction_value(
+        prediction,
+        ["anomaly_map", "anomaly_maps"],
+    )
 
-    anomaly_score = float(anomaly_score)
+    if score is None:
+        raise RuntimeError("Could not extract PatchCore anomaly score.")
 
-    anomaly_map = prediction.anomaly_map
+    if anomaly_map is None:
+        raise RuntimeError("Could not extract PatchCore anomaly map.")
 
-    if hasattr(anomaly_map, "detach"):
-        anomaly_map = anomaly_map.detach().cpu().numpy()
-
+    score = float(np.asarray(score).squeeze())
     anomaly_map = np.asarray(anomaly_map)
 
-    return anomaly_score, anomaly_map
+    return score, anomaly_map
 
+def inspect_image(
+    image_path: str,
+    threshold: float = DEFAULT_THRESHOLD,
+) -> dict:
 
-# ============================================================
-# SAVE ANOMALY MAP
-# ============================================================
-
-def save_anomaly_map(
-    anomaly_map,
-    original_path: Path,
-):
-
-    heatmap_dir = INSPECTION_DIR / "heatmaps"
-
-    heatmap_dir.mkdir(
-        parents=True,
-        exist_ok=True,
-    )
-
-    output_path = (
-        heatmap_dir
-        / f"{original_path.stem}_anomaly_map.npy"
-    )
-
-    np.save(
-        output_path,
-        anomaly_map,
-    )
-
-    return output_path
-
-
-# ============================================================
-# SAVE INSPECTION LOG
-# ============================================================
-
-def save_inspection_log(
-    image_path: Path,
-    anomaly_score: float,
-    result,
-    heatmap_path: Path,
-):
-
-    INSPECTION_DIR.mkdir(
-        parents=True,
-        exist_ok=True,
-    )
-
-    inspection_id = datetime.now().strftime(
-        "%Y%m%d_%H%M%S_%f"
-    )
-
-    inspection_record = {
-
-        "inspection_id": inspection_id,
-
-        "timestamp": datetime.now().isoformat(),
-
-        "product": "Water Bottle Cap",
-
-        "sku": "water_cap_v1",
-
-        "model": "PatchCore",
-
-        "model_version": "patchcore_water_cap_v2",
-
-        "input_image": str(
-            image_path.relative_to(PROJECT_ROOT)
-        ),
-
-        "heatmap_data": str(
-            heatmap_path.relative_to(PROJECT_ROOT)
-        ),
-
-        "image_quality": {
-            "valid": result.image_quality_valid,
-            "reason": result.quality_reason,
-        },
-
-        "alignment": {
-            "valid": result.alignment_valid,
-        },
-
-        "product_detected": result.product_detected,
-
-        "anomaly_score": result.anomaly_score,
-
-        "confidence": result.confidence,
-
-        "threshold": result.threshold,
-
-        "decision": result.decision,
-
-        "reason": result.reason,
-
-        "supervisor_verdict": None,
-
-        "supervisor_feedback": None,
-    }
-
-    output_path = (
-        INSPECTION_DIR
-        / f"{image_path.stem}_inspection.json"
-    )
-
-    with open(
-        output_path,
-        "w",
-        encoding="utf-8",
-    ) as file:
-
-        json.dump(
-            inspection_record,
-            file,
-            indent=4,
-        )
-
-    return output_path
-
-
-# ============================================================
-# MAIN
-# ============================================================
-
-def main():
-
-    print("=" * 70)
-    print("VisionQC — PatchCore End-to-End Inspection")
-    print("=" * 70)
-
-    if len(sys.argv) < 2:
-
-        print()
-        print("Usage:")
-        print(
-            'python vision/run_patchcore_inspection.py '
-            '"path\\to\\roi_image.jpg"'
-        )
-
-        sys.exit(1)
-
-    image_path = Path(sys.argv[1])
-
-    if not image_path.is_absolute():
-        image_path = PROJECT_ROOT / image_path
-
-    image_path = image_path.resolve()
-
-    if not image_path.exists():
-
-        raise FileNotFoundError(
-            f"Image not found:\n{image_path}"
-        )
-
-    if not CHECKPOINT.exists():
-
-        raise FileNotFoundError(
-            f"PatchCore checkpoint not found:\n{CHECKPOINT}"
-        )
-
-    print()
-    print(f"Input ROI image : {image_path.name}")
-    print(f"Checkpoint      : {CHECKPOINT.name}")
-
-    # --------------------------------------------------------
-    # PATCHCORE
-    # --------------------------------------------------------
-
-    anomaly_score, anomaly_map = run_patchcore(
+    image_path = Path(
         image_path
     )
 
-    print()
-    print(
-        f"RAW anomaly score : "
-        f"{anomaly_score:.6f}"
+    if not image_path.exists():
+        raise FileNotFoundError(
+            f"Image not found: {image_path}"
+        )
+
+    OUTPUT_DIR.mkdir(
+        parents=True,
+        exist_ok=True,
     )
 
-    # --------------------------------------------------------
-    # SAVE HEATMAP DATA
-    # --------------------------------------------------------
+    timestamp = datetime.now().isoformat()
 
-    heatmap_path = save_anomaly_map(
+    print("=" * 70)
+    print("VISIONQC PRODUCTION INSPECTION")
+    print("=" * 70)
+    print(
+        f"Image      : {image_path.name}"
+    )
+    print(
+        "Checkpoint : PatchCore V4"
+    )
+    print(
+        f"Threshold  : {threshold}"
+    )
+    print()
+
+    # ========================================================
+    # 1. PRODUCT DETECTION
+    # ========================================================
+
+    print("[1/6] Detecting product...")
+
+    detection = detect_product(
+        str(image_path)
+    )
+
+    if not detection.detected:
+
+        result = {
+            "timestamp": timestamp,
+            "filename": image_path.name,
+            "decision": "INSPECTION_INVALID",
+            "reason": detection.reason,
+            "product_detected": False,
+            "detection_confidence": float(
+                detection.confidence
+            ),
+        }
+
+        output = (
+            OUTPUT_DIR
+            / f"{image_path.stem}_inspection.json"
+        )
+
+        output.write_text(
+            json.dumps(
+                result,
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+
+        print(
+            "Product detection FAILED."
+        )
+
+        return result
+
+    print(
+        f"    detected=True "
+        f"confidence={detection.confidence:.3f}"
+    )
+
+    # ========================================================
+    # 2. CANONICAL ROI
+    # ========================================================
+
+    print(
+        "[2/6] Extracting canonical ROI..."
+    )
+
+    image = load_image(
+        image_path
+    )
+
+    bbox = detection.bbox
+
+    roi, roi_bbox = extract_canonical_roi(
+        image,
+        bbox,
+        output_size=ROI_SIZE,
+        padding=0.30,
+    )
+
+    roi_path = (
+        OUTPUT_DIR
+        / f"{image_path.stem}_roi.png"
+    )
+
+    success = cv2.imwrite(
+        str(roi_path),
+        roi,
+    )
+
+    if not success:
+        raise RuntimeError(
+            f"Could not save ROI: {roi_path}"
+        )
+
+    print(
+        f"    ROI saved: {roi_path.name}"
+    )
+
+    # ========================================================
+    # 3. LOAD V4
+    # ========================================================
+
+    print(
+        "[3/6] Loading PatchCore V4..."
+    )
+
+    model = load_model()
+
+    # ========================================================
+    # 4. PATCHCORE INFERENCE
+    # ========================================================
+
+    print(
+        "[4/6] Running PatchCore..."
+    )
+
+    score, anomaly_map = run_patchcore(
+        roi_path,
+        model,
+    )
+
+    print(
+        f"    anomaly score = {score:.6f}"
+    )
+
+    # ========================================================
+    # 5. SPATIAL FEATURES
+    # ========================================================
+
+    print(
+        "[5/6] Extracting spatial anomaly features..."
+    )
+
+    spatial = extract_spatial_features(
+        anomaly_map
+    )
+
+    # ========================================================
+    # 6. DECISION
+    # ========================================================
+
+    print(
+        "[6/6] Making decision..."
+    )
+
+    decision = decide(
+        score,
+        threshold,
+        spatial,
+    )
+
+    # ========================================================
+    # HEATMAP
+    # ========================================================
+
+    heatmap_path = (
+        OUTPUT_DIR
+        / f"{image_path.stem}_heatmap.jpg"
+    )
+
+    save_heatmap(
         anomaly_map,
-        image_path,
+        heatmap_path,
     )
 
-    # --------------------------------------------------------
-    # DECISION ENGINE
-    # --------------------------------------------------------
+    # ========================================================
+    # RESULT
+    # ========================================================
 
-    decision_engine = VisionQCDecisionEngine(
-        threshold=THRESHOLD,
-        review_margin=0.10,
+    result = {
+        "timestamp": timestamp,
+
+        "filename": image_path.name,
+
+        "model": {
+            "name": "PatchCore",
+            "version": "V4",
+            "backbone": "resnet18",
+            "layers": [
+                "layer2",
+                "layer3",
+            ],
+            "num_neighbors": 9,
+            "checkpoint": str(
+                CHECKPOINT
+            ),
+        },
+
+        "product_detection": {
+            "detected": bool(
+                detection.detected
+            ),
+            "confidence": float(
+                detection.confidence
+            ),
+            "bbox": list(
+                detection.bbox
+            ),
+            "occupancy": float(
+                detection.occupancy
+            ),
+            "circularity": float(
+                detection.circularity
+            ),
+            "aspect_ratio": float(
+                detection.aspect_ratio
+            ),
+            "color_ratio": float(
+                detection.color_ratio
+            ),
+           "alignment": detection.alignment,
+            "reason": detection.reason,
+        },
+
+        "roi": {
+            "size": ROI_SIZE,
+            "padding": 0.30,
+            "bbox": list(
+                roi_bbox
+            ),
+            "path": str(
+                roi_path
+            ),
+        },
+
+        "patchcore": {
+            "anomaly_score": score,
+            "heatmap_path": str(
+                heatmap_path
+            ),
+        },
+
+        "spatial_features": spatial,
+
+        "decision": {
+            "result": decision,
+            "threshold": threshold,
+            "review_margin": REVIEW_MARGIN,
+        },
+    }
+
+    output = (
+        OUTPUT_DIR
+        / f"{image_path.stem}_inspection.json"
     )
 
-    result = decision_engine.inspect(
-        anomaly_score=anomaly_score,
-        image_quality_valid=True,
-        quality_reason="Image quality acceptable",
-        product_detected=True,
-        alignment_valid=True,
+    output.write_text(
+        json.dumps(
+            result,
+            indent=2,
+            default=float,
+        ),
+        encoding="utf-8",
     )
 
-    # --------------------------------------------------------
-    # DISPLAY
-    # --------------------------------------------------------
+    # ========================================================
+    # CONSOLE RESULT
+    # ========================================================
 
     print()
     print("=" * 70)
-    print("VISIONQC INSPECTION RESULT")
+    print(
+        f"DECISION: {decision}"
+    )
+    print(
+        f"SCORE   : {score:.6f}"
+    )
+    print(
+        f"HEATMAP : {heatmap_path}"
+    )
+    print(
+        f"RESULT  : {output}"
+    )
     print("=" * 70)
 
-    print(
-        f"Input ROI         : "
-        f"{image_path.name}"
-    )
+    return result
 
-    print(
-        f"Product           : "
-        f"Water Bottle Cap"
-    )
 
-    print(
-        f"SKU               : "
-        f"water_cap_v1"
-    )
-
-    print(
-        f"Model             : "
-        f"PatchCore v2"
-    )
-
-    print(
-        f"Image Quality     : "
-        f"{'VALID' if result.image_quality_valid else 'INVALID'}"
-    )
-
-    print(
-        f"Product Detected  : "
-        f"{'YES' if result.product_detected else 'NO'}"
-    )
-
-    print(
-        f"Alignment         : "
-        f"{'VALID' if result.alignment_valid else 'INVALID'}"
-    )
-
-    print(
-        f"Anomaly Score     : "
-        f"{result.anomaly_score:.6f}"
-    )
-
-    print(
-        f"Threshold         : "
-        f"{result.threshold:.6f}"
-    )
-
-    print(
-        f"Confidence        : "
-        f"{result.confidence:.2f}%"
-    )
-
-    print(
-        f"Decision          : "
-        f"{result.decision}"
-    )
-
-    print(
-        f"Reason            : "
-        f"{result.reason}"
-    )
-
-    print("=" * 70)
-
-    # --------------------------------------------------------
-    # SAVE LOG
-    # --------------------------------------------------------
-
-    log_path = save_inspection_log(
-        image_path=image_path,
-        anomaly_score=anomaly_score,
-        result=result,
-        heatmap_path=heatmap_path,
-    )
-
-    print()
-    print(
-        f"Inspection log    : "
-        f"{log_path.relative_to(PROJECT_ROOT)}"
-    )
-
-    print(
-        f"Heatmap data      : "
-        f"{heatmap_path.relative_to(PROJECT_ROOT)}"
-    )
-
-    print()
-    print("Inspection completed.")
-
+# ============================================================
+# CLI
+# ============================================================
 
 if __name__ == "__main__":
-    main()
+
+    if len(sys.argv) < 2:
+        print(
+            "Usage:"
+        )
+        print(
+            "  python vision/run_patchcore_inspection.py "
+            "<image_path> [threshold]"
+        )
+        sys.exit(1)
+
+    image = sys.argv[1]
+
+    threshold = DEFAULT_THRESHOLD
+
+    if len(sys.argv) >= 3:
+        threshold = float(
+            sys.argv[2]
+        )
+
+    inspect_image(
+        image,
+        threshold=threshold,
+    )
+

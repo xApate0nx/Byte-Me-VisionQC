@@ -1,4 +1,4 @@
-from datetime import datetime, time
+from datetime import datetime, time, timedelta
 
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
@@ -14,18 +14,19 @@ router = APIRouter(
 
 
 @router.get("/today")
-def get_today_stats(db: Session = Depends(get_db)):
+def get_today_stats(
+    db: Session = Depends(get_db),
+):
     today = datetime.utcnow().date()
 
-    start_of_day = datetime.combine(today, time.min)
-    start_of_next_day = datetime.combine(
+    start_of_day = datetime.combine(
         today,
         time.min,
     )
 
-    # Move to the next calendar day.
-    from datetime import timedelta
-    start_of_next_day += timedelta(days=1)
+    start_of_next_day = (
+        start_of_day + timedelta(days=1)
+    )
 
     inspections = (
         db.query(Inspection)
@@ -38,69 +39,42 @@ def get_today_stats(db: Session = Depends(get_db)):
 
     total = len(inspections)
 
-    pass_count = sum(
-        1 for inspection in inspections
-        if inspection.decision == "PASS"
+    passed = sum(
+        1 for x in inspections
+        if x.decision == "PASS"
     )
 
-    review_count = sum(
-        1 for inspection in inspections
-        if inspection.decision == "REVIEW"
+    failed = sum(
+        1 for x in inspections
+        if x.decision == "FAIL"
     )
 
-    fail_count = sum(
-        1 for inspection in inspections
-        if inspection.decision == "FAIL"
+    review = sum(
+        1 for x in inspections
+        if x.decision == "REVIEW"
     )
 
-    invalid_count = sum(
-        1
-        for inspection in inspections
-        if inspection.decision == "INSPECTION_INVALID"
+    invalid = sum(
+        1 for x in inspections
+        if x.decision == "INSPECTION_INVALID"
     )
 
-    valid_inspections = [
-        inspection
-        for inspection in inspections
-        if inspection.decision != "INSPECTION_INVALID"
-    ]
-
-    valid_count = len(valid_inspections)
+    valid = total - invalid
 
     rejection_rate = (
-        (fail_count / valid_count) * 100
-        if valid_count > 0
-        else 0.0
-    )
-
-    average_anomaly_score = (
-        sum(
-            inspection.anomaly_score
-            for inspection in valid_inspections
-        ) / valid_count
-        if valid_count > 0
-        else 0.0
-    )
-
-    average_confidence = (
-        sum(
-            inspection.confidence
-            for inspection in valid_inspections
-        ) / valid_count
-        if valid_count > 0
+        (failed / valid) * 100
+        if valid > 0
         else 0.0
     )
 
     return {
-        "success": True,
-        "date": today.isoformat(),
-        "total_inspections": total,
-        "valid_inspections": valid_count,
-        "invalid_inspections": invalid_count,
-        "pass_count": pass_count,
-        "review_count": review_count,
-        "fail_count": fail_count,
-        "rejection_rate_percent": round(rejection_rate, 2),
-        "average_anomaly_score": round(average_anomaly_score, 4),
-        "average_confidence": round(average_confidence, 2),
+        "total": total,
+        "passed": passed,
+        "failed": failed,
+        "review": review,
+        "invalid": invalid,
+        "rejection_rate": round(
+            rejection_rate,
+            2,
+        ),
     }

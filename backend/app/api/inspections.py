@@ -19,7 +19,7 @@ class SupervisorFeedback(BaseModel):
 
 @router.get("")
 def get_inspections(
-    limit: int = Query(default=50, ge=1, le=200),
+    limit: int = Query(default=100, ge=1, le=200),
     db: Session = Depends(get_db),
 ):
     inspections = (
@@ -30,32 +30,35 @@ def get_inspections(
     )
 
     return {
-        "success": True,
-        "count": len(inspections),
         "inspections": [
             {
                 "inspection_id": inspection.inspection_id,
+                "id": inspection.id,
                 "timestamp": inspection.timestamp.isoformat(),
                 "filename": inspection.filename,
-                "product": inspection.product,
-                "sku": inspection.sku,
-                "model_name": inspection.model_name,
-                "model_version": inspection.model_version,
+                "result": inspection.decision,
+                "decision": inspection.decision,
                 "anomaly_score": inspection.anomaly_score,
                 "threshold": inspection.threshold,
                 "confidence": inspection.confidence,
-                "decision": inspection.decision,
                 "reason": inspection.reason,
-                "image_quality": inspection.image_quality,
-                "alignment": inspection.alignment,
-                "original_image_path": inspection.original_image_path,
+                "image_quality_valid": (
+                    inspection.image_quality == "VALID"
+                ),
+                "product_detected": (
+                    inspection.decision != "INSPECTION_INVALID"
+                ),
+                "alignment_valid": (
+                    inspection.alignment == "VALID"
+                ),
+                "image_url": inspection.original_image_path,
+                "heatmap_url": inspection.heatmap_path,
                 "roi_image_path": inspection.roi_image_path,
-                "heatmap_path": inspection.heatmap_path,
                 "supervisor_verdict": inspection.supervisor_verdict,
                 "supervisor_feedback": inspection.supervisor_feedback,
             }
             for inspection in inspections
-        ],
+        ]
     }
 
 
