@@ -1,0 +1,310 @@
+[
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.15_roi.png",
+    "anomaly_score": 24.538097381591797,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.17_roi.png",
+    "anomaly_score": 17.60223960876465,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.19_roi.png",
+    "anomaly_score": 17.678163528442383,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.20_roi.png",
+    "anomaly_score": 16.348037719726562,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.21_roi.png",
+    "anomaly_score": 16.4793758392334,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.22_roi.png",
+    "anomaly_score": 16.100683212280273,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.23_roi.png",
+    "anomaly_score": 23.6230525970459,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.24_roi.png",
+    "anomaly_score": 25.22212028503418,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.26_roi.png",
+    "anomaly_score": 22.846206665039062,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.29_roi.png",
+    "anomaly_score": 17.67108726501465,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.35_roi.png",
+    "anomaly_score": 17.714431762695312,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.37_roi.png",
+    "anomaly_score": 17.553428649902344,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.38_roi.png",
+    "anomaly_score": 25.45816993713379,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.43_roi.png",
+    "anomaly_score": 27.141164779663086,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.45_roi.png",
+    "anomaly_score": 17.305017471313477,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.47_roi.png",
+    "anomaly_score": 18.197410583496094,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.48_roi.png",
+    "anomaly_score": 22.77806854248047,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.50_roi.png",
+    "anomaly_score": 25.99493408203125,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.52_roi.png",
+    "anomaly_score": 17.963109970092773,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.53_roi.png",
+    "anomaly_score": 23.799118041992188,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "wsp_roi.png",
+    "anomaly_score": 26.213916778564453,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.07_roi.png",
+    "anomaly_score": 17.11222267150879,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.08_roi.png",
+    "anomaly_score": 19.653650283813477,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.10_roi.png",
+    "anomaly_score": 18.02644920349121,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.11_roi.png",
+    "anomaly_score": 24.763742446899414,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.12 (1)_roi.png",
+    "anomaly_score": 25.622102737426758,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.12_roi.png",
+    "anomaly_score": 25.95191764831543,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.13_roi.png",
+    "anomaly_score": 24.11663246154785,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.14_roi.png",
+    "anomaly_score": 26.955322265625,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.15 (1)_roi.png",
+    "anomaly_score": 24.826082229614258,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.15 (2)_roi.png",
+    "anomaly_score": 24.954620361328125,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.15_roi.png",
+    "anomaly_score": 27.12417221069336,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.16 (1)_roi.png",
+    "anomaly_score": 24.643070220947266,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.16 (2)_roi.png",
+    "anomaly_score": 19.61128807067871,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.16_roi.png",
+    "anomaly_score": 24.77507209777832,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.17 (1)_roi.png",
+    "anomaly_score": 24.786033630371094,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.17 (2)_roi.png",
+    "anomaly_score": 24.89801597595215,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.17 (3)_roi.png",
+    "anomaly_score": 24.00575065612793,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.17_roi.png",
+    "anomaly_score": 19.76502227783203,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.18 (1)_roi.png",
+    "anomaly_score": 16.930795669555664,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.18 (2)_roi.png",
+    "anomaly_score": 17.875120162963867,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.18 (3)_roi.png",
+    "anomaly_score": 18.390689849853516,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.18_roi.png",
+    "anomaly_score": 22.87578010559082,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.19_roi.png",
+    "anomaly_score": 16.646669387817383,
+    "decision": "FAIL",
+    "status": "OK"
+  }
+]

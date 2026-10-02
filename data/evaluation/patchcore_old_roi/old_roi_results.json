@@ -1,0 +1,310 @@
+[
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.15.jpeg",
+    "anomaly_score": 11.174229621887207,
+    "decision": "PASS",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.17.jpeg",
+    "anomaly_score": 10.984939575195312,
+    "decision": "PASS",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.19.jpeg",
+    "anomaly_score": 12.40944766998291,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.20.jpeg",
+    "anomaly_score": 10.425409317016602,
+    "decision": "PASS",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.21.jpeg",
+    "anomaly_score": 10.616604804992676,
+    "decision": "PASS",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.22.jpeg",
+    "anomaly_score": 11.230938911437988,
+    "decision": "PASS",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.23.jpeg",
+    "anomaly_score": 11.425846099853516,
+    "decision": "PASS",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.24.jpeg",
+    "anomaly_score": 11.34212875366211,
+    "decision": "PASS",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.26.jpeg",
+    "anomaly_score": 11.168275833129883,
+    "decision": "PASS",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.29.jpeg",
+    "anomaly_score": 10.78337574005127,
+    "decision": "PASS",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.35.jpeg",
+    "anomaly_score": 10.637174606323242,
+    "decision": "PASS",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.37.jpeg",
+    "anomaly_score": 10.167854309082031,
+    "decision": "PASS",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.38.jpeg",
+    "anomaly_score": 12.550421714782715,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.43.jpeg",
+    "anomaly_score": 11.46959114074707,
+    "decision": "PASS",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.45.jpeg",
+    "anomaly_score": 10.652636528015137,
+    "decision": "PASS",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.47.jpeg",
+    "anomaly_score": 12.759991645812988,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.48.jpeg",
+    "anomaly_score": 16.854677200317383,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.50.jpeg",
+    "anomaly_score": 11.304337501525879,
+    "decision": "PASS",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.52.jpeg",
+    "anomaly_score": 10.625774383544922,
+    "decision": "PASS",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "WhatsApp Image 2026-10-02 at 13.44.53.jpeg",
+    "anomaly_score": 11.848611831665039,
+    "decision": "PASS",
+    "status": "OK"
+  },
+  {
+    "category": "normal",
+    "filename": "wsp.jpeg",
+    "anomaly_score": 17.044910430908203,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.07.jpeg",
+    "anomaly_score": 13.785425186157227,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.08.jpeg",
+    "anomaly_score": 15.36844539642334,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.10.jpeg",
+    "anomaly_score": 15.435352325439453,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.11.jpeg",
+    "anomaly_score": 17.679533004760742,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.12 (1).jpeg",
+    "anomaly_score": 19.13194465637207,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.12.jpeg",
+    "anomaly_score": 18.237060546875,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.13.jpeg",
+    "anomaly_score": 16.97127914428711,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.14.jpeg",
+    "anomaly_score": 20.483970642089844,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.15 (1).jpeg",
+    "anomaly_score": 19.678125381469727,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.15 (2).jpeg",
+    "anomaly_score": 20.16154670715332,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.15.jpeg",
+    "anomaly_score": 20.65444564819336,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.16 (1).jpeg",
+    "anomaly_score": 15.70060920715332,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.16 (2).jpeg",
+    "anomaly_score": 12.702815055847168,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.16.jpeg",
+    "anomaly_score": 22.697160720825195,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.17 (1).jpeg",
+    "anomaly_score": 19.045150756835938,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.17 (2).jpeg",
+    "anomaly_score": 16.784603118896484,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.17 (3).jpeg",
+    "anomaly_score": 15.855978965759277,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.17.jpeg",
+    "anomaly_score": 13.388345718383789,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.18 (1).jpeg",
+    "anomaly_score": 14.224905967712402,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.18 (2).jpeg",
+    "anomaly_score": 14.532853126525879,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.18 (3).jpeg",
+    "anomaly_score": 15.943511009216309,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.18.jpeg",
+    "anomaly_score": 15.042132377624512,
+    "decision": "FAIL",
+    "status": "OK"
+  },
+  {
+    "category": "defect",
+    "filename": "WhatsApp Image 2026-10-02 at 13.51.19.jpeg",
+    "anomaly_score": 15.411355018615723,
+    "decision": "FAIL",
+    "status": "OK"
+  }
+]

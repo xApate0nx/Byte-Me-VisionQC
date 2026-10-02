@@ -1,0 +1,338 @@
+[1mdiff --git a/backend/app/ml/inference_adapter.py b/backend/app/ml/inference_adapter.py[m
+[1mindex e69de29..038dedc 100644[m
+[1m--- a/backend/app/ml/inference_adapter.py[m
+[1m+++ b/backend/app/ml/inference_adapter.py[m
+[36m@@ -0,0 +1,332 @@[m
+[32m+[m[32mfrom pathlib import Path[m
+[32m+[m[32mimport sys[m
+[32m+[m
+[32m+[m[32mimport cv2[m
+[32m+[m[32mimport numpy as np[m
+[32m+[m[32mimport torch[m
+[32m+[m[32mfrom PIL import Image, ImageOps[m
+[32m+[m
+[32m+[m[32mimport anomalib[m
+[32m+[m[32mfrom anomalib.models import Patchcore[m
+[32m+[m[32mfrom anomalib.data import PredictDataset[m
+[32m+[m[32mfrom anomalib.engine import Engine[m
+[32m+[m
+[32m+[m
+[32m+[m[32m# ---------------------------------------------------------[m
+[32m+[m[32m# Project paths[m
+[32m+[m[32m# ---------------------------------------------------------[m
+[32m+[m
+[32m+[m[32mPROJECT_ROOT = Path(__file__).resolve().parents[3][m
+[32m+[m
+[32m+[m[32mCHECKPOINT = ([m
+[32m+[m[32m    PROJECT_ROOT[m
+[32m+[m[32m    / "models"[m
+[32m+[m[32m    / "patchcore_water_cap_v2"[m
+[32m+[m[32m    / "Patchcore"[m
+[32m+[m[32m    / "water_cap_v1_roi80"[m
+[32m+[m[32m    / "v0"[m
+[32m+[m[32m    / "weights"[m
+[32m+[m[32m    / "lightning"[m
+[32m+[m[32m    / "model.ckpt"[m
+[32m+[m[32m)[m
+[32m+[m
+[32m+[m[32mTEMP_DIR = PROJECT_ROOT / "data" / "inspections" / "_backend_temp"[m
+[32m+[m[32mTEMP_DIR.mkdir(parents=True, exist_ok=True)[m
+[32m+[m
+[32m+[m
+[32m+[m[32m# ---------------------------------------------------------[m
+[32m+[m[32m# VisionQC PatchCore configuration[m
+[32m+[m[32m# ---------------------------------------------------------[m
+[32m+[m
+[32m+[m[32mIMAGE_SIZE = 256[m
+[32m+[m
+[32m+[m[32m# Current prototype threshold.[m
+[32m+[m[32m# This was calibrated from the existing 44-image prototype[m
+[32m+[m[32m# evaluation and is NOT a production-calibrated threshold.[m
+[32m+[m[32mDEFAULT_THRESHOLD = 12.3785223961[m
+[32m+[m
+[32m+[m
+[32m+[m[32m# ---------------------------------------------------------[m
+[32m+[m[32m# PatchCore model holder[m
+[32m+[m[32m# ---------------------------------------------------------[m
+[32m+[m
+[32m+[m[32m_model = None[m
+[32m+[m[32m_engine = None[m
+[32m+[m
+[32m+[m
+[32m+[m[32mdef _load_model():[m
+[32m+[m[32m    """[m
+[32m+[m[32m    Load PatchCore v2 once and keep it in memory.[m
+[32m+[m
+[32m+[m[32m    Loading the model for every inspection would be extremely[m
+[32m+[m[32m    slow, so the backend keeps one loaded model instance.[m
+[32m+[m[32m    """[m
+[32m+[m
+[32m+[m[32m    global _model, _engine[m
+[32m+[m
+[32m+[m[32m    if _model is not None and _engine is not None:[m
+[32m+[m[32m        return _model, _engine[m
+[32m+[m
+[32m+[m[32m    if not CHECKPOINT.exists():[m
+[32m+[m[32m        raise FileNotFoundError([m
+[32m+[m[32m            f"PatchCore checkpoint not found: {CHECKPOINT}"[m
+[32m+[m[32m        )[m
+[32m+[m
+[32m+[m[32m    # Anomalib 2.6.2 checkpoint compatibility.[m
+[32m+[m[32m    torch.serialization.add_safe_globals([m
+[32m+[m[32m        [anomalib.PrecisionType][m
+[32m+[m[32m    )[m
+[32m+[m
+[32m+[m[32m    _model = Patchcore.load_from_checkpoint([m
+[32m+[m[32m        CHECKPOINT,[m
+[32m+[m[32m        weights_only=False,[m
+[32m+[m[32m    )[m
+[32m+[m
+[32m+[m[32m    # We need the actual raw PatchCore distance,[m
+[32m+[m[32m    # not Anomalib's postprocessed 0/1 prediction.[m
+[32m+[m[32m    _model.post_processor = None[m
+[32m+[m
+[32m+[m[32m    _engine = Engine([m
+[32m+[m[32m        accelerator="cpu",[m
+[32m+[m[32m        devices=1,[m
+[32m+[m[32m    )[m
+[32m+[m
+[32m+[m[32m    return _model, _engine[m
+[32m+[m
+[32m+[m
+[32m+[m[32m# ---------------------------------------------------------[m
+[32m+[m[32m# Image preprocessing[m
+[32m+[m[32m# ---------------------------------------------------------[m
+[32m+[m
+[32m+[m[32mdef prepare_roi([m
+[32m+[m[32m    input_path: Path,[m
+[32m+[m[32m    output_path: Path,[m
+[32m+[m[32m) -> Path:[m
+[32m+[m[32m    """[m
+[32m+[m[32m    Convert the original inspection image into the same[m
+[32m+[m[32m    80% ROI representation used during PatchCore v2 evaluation.[m
+[32m+[m
+[32m+[m[32m    Pipeline:[m
+[32m+[m
+[32m+[m[32m        original image[m
+[32m+[m[32m             ↓[m
+[32m+[m[32m        EXIF correction[m
+[32m+[m[32m             ↓[m
+[32m+[m[32m        400x400 white canvas[m
+[32m+[m[32m             ↓[m
+[32m+[m[32m        central 80% crop[m
+[32m+[m[32m             ↓[m
+[32m+[m[32m        256x256[m
+[32m+[m[32m    """[m
+[32m+[m
+[32m+[m[32m    image = Image.open(input_path)[m
+[32m+[m
+[32m+[m[32m    # Correct phone-camera orientation.[m
+[32m+[m[32m    image = ImageOps.exif_transpose(image)[m
+[32m+[m
+[32m+[m[32m    image = image.convert("RGB")[m
+[32m+[m
+[32m+[m[32m    # -----------------------------------------------------[m
+[32m+[m[32m    # Fit image into a 400x400 canvas while preserving[m
+[32m+[m[32m    # aspect ratio.[m
+[32m+[m[32m    # -----------------------------------------------------[m
+[32m+[m
+[32m+[m[32m    canvas_size = 400[m
+[32m+[m
+[32m+[m[32m    scale = min([m
+[32m+[m[32m        canvas_size / image.width,[m
+[32m+[m[32m        canvas_size / image.height,[m
+[32m+[m[32m    )[m
+[32m+[m
+[32m+[m[32m    new_width = round(image.width * scale)[m
+[32m+[m[32m    new_height = round(image.height * scale)[m
+[32m+[m
+[32m+[m[32m    image = image.resize([m
+[32m+[m[32m        (new_width, new_height),[m
+[32m+[m[32m        Image.Resampling.LANCZOS,[m
+[32m+[m[32m    )[m
+[32m+[m
+[32m+[m[32m    canvas = Image.new([m
+[32m+[m[32m        "RGB",[m
+[32m+[m[32m        (canvas_size, canvas_size),[m
+[32m+[m[32m        "white",[m
+[32m+[m[32m    )[m
+[32m+[m
+[32m+[m[32m    x = (canvas_size - new_width) // 2[m
+[32m+[m[32m    y = (canvas_size - new_height) // 2[m
+[32m+[m
+[32m+[m[32m    canvas.paste(image, (x, y))[m
+[32m+[m
+[32m+[m[32m    # -----------------------------------------------------[m
+[32m+[m[32m    # Central 80% ROI[m
+[32m+[m[32m    # -----------------------------------------------------[m
+[32m+[m
+[32m+[m[32m    roi_size = round(canvas_size * 0.80)[m
+[32m+[m
+[32m+[m[32m    left = (canvas_size - roi_size) // 2[m
+[32m+[m[32m    top = (canvas_size - roi_size) // 2[m
+[32m+[m
+[32m+[m[32m    roi = canvas.crop([m
+[32m+[m[32m        ([m
+[32m+[m[32m            left,[m
+[32m+[m[32m            top,[m
+[32m+[m[32m            left + roi_size,[m
+[32m+[m[32m            top + roi_size,[m
+[32m+[m[32m        )[m
+[32m+[m[32m    )[m
+[32m+[m
+[32m+[m[32m    # PatchCore input size.[m
+[32m+[m[32m    roi = roi.resize([m
+[32m+[m[32m        (IMAGE_SIZE, IMAGE_SIZE),[m
+[32m+[m[32m        Image.Resampling.LANCZOS,[m
+[32m+[m[32m    )[m
+[32m+[m
+[32m+[m[32m    roi.save(output_path, quality=95)[m
+[32m+[m
+[32m+[m[32m    return output_path[m
+[32m+[m
+[32m+[m
+[32m+[m[32m# ---------------------------------------------------------[m
+[32m+[m[32m# PatchCore prediction[m
+[32m+[m[32m# ---------------------------------------------------------[m
+[32m+[m
+[32m+[m[32mdef predict(image_path: Path):[m
+[32m+[m[32m    """[m
+[32m+[m[32m    Run PatchCore v2 on one prepared ROI image.[m
+[32m+[m[32m    """[m
+[32m+[m
+[32m+[m[32m    model, engine = _load_model()[m
+[32m+[m
+[32m+[m[32m    dataset = PredictDataset([m
+[32m+[m[32m        path=image_path,[m
+[32m+[m[32m        image_size=(IMAGE_SIZE, IMAGE_SIZE),[m
+[32m+[m[32m    )[m
+[32m+[m
+[32m+[m[32m    predictions = engine.predict([m
+[32m+[m[32m        model=model,[m
+[32m+[m[32m        dataset=dataset,[m
+[32m+[m[32m        ckpt_path=None,[m
+[32m+[m[32m    )[m
+[32m+[m
+[32m+[m[32m    if predictions is None:[m
+[32m+[m[32m        raise RuntimeError([m
+[32m+[m[32m            "PatchCore returned no prediction."[m
+[32m+[m[32m        )[m
+[32m+[m
+[32m+[m[32m    if not isinstance(predictions, list):[m
+[32m+[m[32m        predictions = list(predictions)[m
+[32m+[m
+[32m+[m[32m    if len(predictions) == 0:[m
+[32m+[m[32m        raise RuntimeError([m
+[32m+[m[32m            "PatchCore returned an empty prediction list."[m
+[32m+[m[32m        )[m
+[32m+[m
+[32m+[m[32m    prediction = predictions[0][m
+[32m+[m
+[32m+[m[32m    # -----------------------------------------------------[m
+[32m+[m[32m    # Extract raw anomaly score[m
+[32m+[m[32m    # -----------------------------------------------------[m
+[32m+[m
+[32m+[m[32m    if hasattr(prediction, "pred_score"):[m
+[32m+[m[32m        score_tensor = prediction.pred_score[m
+[32m+[m[32m    elif isinstance(prediction, dict) and "pred_score" in prediction:[m
+[32m+[m[32m        score_tensor = prediction["pred_score"][m
+[32m+[m[32m    else:[m
+[32m+[m[32m        raise RuntimeError([m
+[32m+[m[32m            "Could not find pred_score in PatchCore prediction."[m
+[32m+[m[32m        )[m
+[32m+[m
+[32m+[m[32m    if torch.is_tensor(score_tensor):[m
+[32m+[m[32m        score = float(score_tensor.detach().cpu().reshape(-1)[0])[m
+[32m+[m[32m    else:[m
+[32m+[m[32m        score = float(np.asarray(score_tensor).reshape(-1)[0])[m
+[32m+[m
+[32m+[m[32m    # -----------------------------------------------------[m
+[32m+[m[32m    # Extract anomaly map[m
+[32m+[m[32m    # -----------------------------------------------------[m
+[32m+[m
+[32m+[m[32m    anomaly_map = None[m
+[32m+[m
+[32m+[m[32m    if hasattr(prediction, "anomaly_map"):[m
+[32m+[m[32m        anomaly_map = prediction.anomaly_map[m
+[32m+[m[32m    elif isinstance(prediction, dict):[m
+[32m+[m[32m        anomaly_map = prediction.get("anomaly_map")[m
+[32m+[m
+[32m+[m[32m    if anomaly_map is not None:[m
+[32m+[m[32m        if torch.is_tensor(anomaly_map):[m
+[32m+[m[32m            anomaly_map = ([m
+[32m+[m[32m                anomaly_map.detach()[m
+[32m+[m[32m                .cpu()[m
+[32m+[m[32m                .numpy()[m
+[32m+[m[32m            )[m
+[32m+[m
+[32m+[m[32m        anomaly_map = np.asarray(anomaly_map)[m
+[32m+[m
+[32m+[m[32m        # Remove batch/channel dimensions.[m
+[32m+[m[32m        anomaly_map = np.squeeze(anomaly_map)[m
+[32m+[m
+[32m+[m[32m        if anomaly_map.ndim != 2:[m
+[32m+[m[32m            anomaly_map = None[m
+[32m+[m
+[32m+[m[32m    return {[m
+[32m+[m[32m        "anomaly_score": score,[m
+[32m+[m[32m        "anomaly_map": anomaly_map,[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m
+[32m+[m[32m# ---------------------------------------------------------[m
+[32m+[m[32m# Public inspection function[m
+[32m+[m[32m# ---------------------------------------------------------[m
+[32m+[m
+[32m+[m[32mdef inspect_image([m
+[32m+[m[32m    image_path: str | Path,[m
+[32m+[m[32m    threshold: float = DEFAULT_THRESHOLD,[m
+[32m+[m[32m):[m
+[32m+[m[32m    """[m
+[32m+[m[32m    Complete ML inference pipeline.[m
+[32m+[m
+[32m+[m[32m    Returns:[m
+[32m+[m[32m        anomaly score[m
+[32m+[m[32m        threshold[m
+[32m+[m[32m        decision[m
+[32m+[m[32m        anomaly map[m
+[32m+[m[32m        ROI path[m
+[32m+[m[32m    """[m
+[32m+[m
+[32m+[m[32m    image_path = Path(image_path)[m
+[32m+[m
+[32m+[m[32m    if not image_path.exists():[m
+[32m+[m[32m        raise FileNotFoundError([m
+[32m+[m[32m            f"Input image not found: {image_path}"[m
+[32m+[m[32m        )[m
+[32m+[m
+[32m+[m[32m    # Create a unique temporary ROI filename.[m
+[32m+[m[32m    roi_path = TEMP_DIR / ([m
+[32m+[m[32m        f"{image_path.stem}_roi80.png"[m
+[32m+[m[32m    )[m
+[32m+[m
+[32m+[m[32m    prepare_roi([m
+[32m+[m[32m        image_path,[m
+[32m+[m[32m        roi_path,[m
+[32m+[m[32m    )[m
+[32m+[m
+[32m+[m[32m    result = predict(roi_path)[m
+[32m+[m
+[32m+[m[32m    score = result["anomaly_score"][m
+[32m+[m
+[32m+[m[32m    # -----------------------------------------------------[m
+[32m+[m[32m    # Current prototype decision rule[m
+[32m+[m[32m    # -----------------------------------------------------[m
+[32m+[m
+[32m+[m[32m    if score >= threshold:[m
+[32m+[m[32m        decision = "FAIL"[m
+[32m+[m[32m    else:[m
+[32m+[m[32m        decision = "PASS"[m
+[32m+[m
+[32m+[m[32m    return {[m
+[32m+[m[32m        "anomaly_score": score,[m
+[32m+[m[32m        "threshold": threshold,[m
+[32m+[m[32m        "decision": decision,[m
+[32m+[m[32m        "roi_path": str(roi_path),[m
+[32m+[m[32m        "anomaly_map": result["anomaly_map"],[m
+[32m+[m[32m    }[m
+\ No newline at end of file[m
